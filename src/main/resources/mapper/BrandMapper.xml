@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_brand(
+         name, pinyin, logo, description, keywords,
+        sort, sales, product_count, comment_count, positive_comment_count,
+        enable, gmt_create, gmt_modified)
+        values(
+               #{name},#{pinyin},#{logo},#{description},#{keywords},
+               #{sort},#{sales},#{productCount},#{commentCount},#{positiveCommentCount},
+               #{enable},#{gmtCreate},#{gmtModified} )
+    </insert>
+</mapper>
