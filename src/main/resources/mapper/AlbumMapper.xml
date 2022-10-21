@@ -9,4 +9,10 @@
         values (
          #{name},#{description},#{sort},#{gmtCreate},#{gmtModified})
     </insert>
+    <delete id="deleteById">
+        delete from pms_album where id = #{id}
+    </delete>
+    <update id="updateNameById">
+        update pms_album set name = #{name} where id = #{id}
+    </update>
 </mapper>

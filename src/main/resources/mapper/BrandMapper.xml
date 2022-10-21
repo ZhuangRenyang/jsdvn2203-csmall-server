@@ -13,4 +13,13 @@
                #{sort},#{sales},#{productCount},#{commentCount},#{positiveCommentCount},
                #{enable},#{gmtCreate},#{gmtModified} )
     </insert>
+<!--    int deleteById(Long id);-->
+    <delete id="deleteById">
+        delete from pms_brand where id=#{id}
+    </delete>
+<!--int updateNameById(@Param("id") Long id,
+        @Param("name") String name);-->
+    <update id="updateNameById">
+        update pms_brand set name =#{name} where id=#{id}
+    </update>
 </mapper>
