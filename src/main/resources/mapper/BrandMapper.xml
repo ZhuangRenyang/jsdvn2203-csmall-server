@@ -3,6 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper">
+
+    <!-- int insert(Brand brand);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into pms_brand(
          name, pinyin, logo, description, keywords,
@@ -13,13 +15,69 @@
                #{sort},#{sales},#{productCount},#{commentCount},#{positiveCommentCount},
                #{enable},#{gmtCreate},#{gmtModified} )
     </insert>
+
 <!--    int deleteById(Long id);-->
     <delete id="deleteById">
         delete from pms_brand where id=#{id}
     </delete>
+
+    <!-- int deleteByIds(Long... ids);-->
+    <delete id="deleteByIds">
+        delete from pms_brand where id in (
+            <foreach collection="array" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+    </delete>
+
 <!--int updateNameById(@Param("id") Long id,
         @Param("name") String name);-->
     <update id="updateNameById">
         update pms_brand set name =#{name} where id=#{id}
+    </update>
+
+    <!-- int updateById(Brand brand);-->
+    <update id="updateById">
+        update pms_brand set
+                 <if test="name != null">
+                     name=#{name},
+                 </if>
+                 <if test="pinyin != null">
+                     pinyin=#{pinyin},
+                 </if>
+                <if test="logo !=null">
+                    logo=#{logo},
+                </if>
+                <if test="description !=null">
+                    description=#{description}
+                </if>
+                <if test="keywords != null">
+                    keywords=#{keywords}
+                </if>
+                <if test="sort != null">
+                    sort=#{sort}
+                </if>
+                <if test="sales != null">
+                    sales=#{sales}
+                </if>
+                <if test="productCount !=null">
+                    product_count=#{productCount}
+                </if>
+                <if test="commentCount !=null">
+                    comment_count=#{commentCount}
+                </if>
+                <if test="positiveCommentCount != null">
+                    positive_comment_count =#{positiveCommentCount}
+                </if>
+                <if test="enable != null">
+                    enable =#{enable}
+                </if>
+                <if test="gmtCreate != null">
+                    gmt_create =#{gmtCreate}
+                </if>
+                <if test="gmtModified != null">
+                    gmt_modified =#{gmtModified}
+                </if>
+                 where id =#{id}
     </update>
 </mapper>

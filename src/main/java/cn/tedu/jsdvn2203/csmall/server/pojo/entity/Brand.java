@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * 品牌实体类
+ */
 public class Brand implements Serializable {
     private Long id;
     private String name;

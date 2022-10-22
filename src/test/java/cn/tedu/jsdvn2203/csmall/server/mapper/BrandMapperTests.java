@@ -1,6 +1,5 @@
 package cn.tedu.jsdvn2203.csmall.server.mapper;
 
-import cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Brand;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,11 @@ public class BrandMapperTests {
     public void testDeleteById(){
         Long id = 1L;
         int rows = brandMapper.deleteById(id);
+        System.out.println("删除完成，受影响的行数="+rows);
+    }
+    @Test
+    public void testDeleteByIds(){
+       int rows = brandMapper.deleteByIds(3L,4L,8L);
         System.out.println("删除完成，受影响的行数="+rows);
     }
     @Test
