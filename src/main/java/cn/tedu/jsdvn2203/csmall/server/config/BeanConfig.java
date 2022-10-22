@@ -1,6 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.config;
 
-import cn.tedu.jsdvn2203.csmall.server.controller.CategoryController;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -8,21 +8,22 @@ import org.springframework.context.annotation.Lazy;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@Slf4j
 @Configuration
 public class BeanConfig {
 
     @Lazy
     @Bean
     public Date date(){
-        System.out.println("BeanConfig.date()");
+        log.info("BeanConfig.date()");
 //        Date date = new Date();
-//        System.out.println("当前系统时间"+date);
+//        log.info("当前系统时间:{}",date);
         return new Date();
     }
 
     @Bean
     public LocalDateTime localDateTime(){
-        System.out.println("BeanConfig.localDateTime()");
+        log.info("BeanConfig.localDateTime()");
         return LocalDateTime.now();
     }
 

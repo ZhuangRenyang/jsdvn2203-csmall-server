@@ -1,25 +1,148 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper">
+
+    <!-- int insert(Brand brand);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into pms_brand(
-         name, pinyin, logo, description, keywords,
-        sort, sales, product_count, comment_count, positive_comment_count,
-        enable, gmt_create, gmt_modified)
-        values(
-               #{name},#{pinyin},#{logo},#{description},#{keywords},
-               #{sort},#{sales},#{productCount},#{commentCount},#{positiveCommentCount},
-               #{enable},#{gmtCreate},#{gmtModified} )
+        insert into pms_brand(name, pinyin, logo, description, keywords,
+                              sort, sales, product_count, comment_count, positive_comment_count,
+                              enable, gmt_create, gmt_modified)
+        values (#{name}, #{pinyin}, #{logo}, #{description}, #{keywords},
+                #{sort}, #{sales}, #{productCount}, #{commentCount}, #{positiveCommentCount},
+                #{enable}, #{gmtCreate}, #{gmtModified})
     </insert>
-<!--    int deleteById(Long id);-->
+
+    <!--    int deleteById(Long id);-->
     <delete id="deleteById">
-        delete from pms_brand where id=#{id}
+        delete
+        from pms_brand
+        where id = #{id}
     </delete>
-<!--int updateNameById(@Param("id") Long id,
-        @Param("name") String name);-->
+
+    <!-- int deleteByIds(Long... ids);-->
+    <delete id="deleteByIds">
+        delete from pms_brand where id in (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!--int updateNameById(@Param("id") Long id,
+            @Param("name") String name);-->
     <update id="updateNameById">
-        update pms_brand set name =#{name} where id=#{id}
+        update pms_brand
+        set name =#{name}
+        where id = #{id}
     </update>
+
+    <!-- int updateById(Brand brand);-->
+    <update id="updateById">
+        update pms_brand
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="pinyin != null">
+                pinyin=#{pinyin},
+            </if>
+            <if test="logo !=null">
+                logo=#{logo},
+            </if>
+            <if test="description !=null">
+                description=#{description},
+            </if>
+            <if test="keywords != null">
+                keywords=#{keywords},
+            </if>
+            <if test="sort != null">
+                sort=#{sort},
+            </if>
+            <if test="sales != null">
+                sales=#{sales},
+            </if>
+            <if test="productCount !=null">
+                product_count=#{productCount},
+            </if>
+            <if test="commentCount !=null">
+                comment_count=#{commentCount},
+            </if>
+            <if test="positiveCommentCount != null">
+                positive_comment_count =#{positiveCommentCount},
+            </if>
+            <if test="enable != null">
+                enable =#{enable},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create =#{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified =#{gmtModified}
+            </if>
+        </set>
+        where id =#{id}
+    </update>
+
+    <!--    int count();-->
+    <select id="count" resultType="int">
+        SELECT count(*)
+        FROM pms_brand;
+    </select>
+
+    <!--    BrandDetailVo getById-->
+    <select id="getById" resultMap="detailResultMap">
+        SELECT id,
+               name,
+               pinyin,
+               logo,
+               description,
+               keywords,
+               sort,
+               sales,
+               product_count,
+               comment_count,
+               positive_comment_count,
+               enable
+        FROM pms_brand
+        WHERE id = #{id}
+    </select>
+
+    <resultMap id="detailResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandDetailVO">
+        <result column="product_count" property="productCount"></result>
+        <result column="comment_count" property="commentCount"></result>
+        <result column="positive_comment_count" property="positiveCommentCount"></result>
+    </resultMap>
+
+    <!-- List<BrandListItemVO> list();-->
+    <select id="list" resultMap="ListItemResultMap">
+        SELECT
+        <include refid="ListItemQueryFields"/>
+        FROM pms_brand
+        ORDER BY id
+    </select>
+
+    <resultMap id="ListItemResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO">
+        <result column="product_count" property="productCount"></result>
+        <result column="comment_count" property="commentCount"></result>
+        <result column="positive_comment_count" property="positiveCommentCount"></result>
+    </resultMap>
+
+    <sql id="ListItemQueryFields">
+        <if test="true">
+            id,
+            name,
+            pinyin,
+            logo,
+            description,
+            keywords,
+            sort,
+            sales,
+            product_count,
+            comment_count,
+            positive_comment_count,
+            enable
+        </if>
+    </sql>
 </mapper>

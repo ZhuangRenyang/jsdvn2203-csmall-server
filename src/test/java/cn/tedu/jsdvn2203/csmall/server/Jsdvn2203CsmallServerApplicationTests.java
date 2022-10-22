@@ -9,6 +9,7 @@ import cn.tedu.jsdvn2203.csmall.server.repo.IBrandRepository;
 import cn.tedu.jsdvn2203.csmall.server.repo.ICategoryRepository;
 import cn.tedu.jsdvn2203.csmall.server.service.impl.AlbumServiceImpl;
 import cn.tedu.jsdvn2203.csmall.server.service.impl.BrandServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,7 @@ import org.springframework.web.context.support.GenericWebApplicationContext;
 
 import java.util.Date;
 
+@Slf4j
 @SpringBootTest
 class Jsdvn2203CsmallServerApplicationTests {
 
@@ -35,11 +37,10 @@ class Jsdvn2203CsmallServerApplicationTests {
     @Test
     void contextLoads() {
         PictureController pictureController = ac.getBean(PictureController.class);
-        System.out.println(pictureController);
+        log.info("{}",pictureController);
         AlbumController albumController = ac.getBean(AlbumController.class);
-        System.out.println(albumController);
-
-        System.out.println(categoryRepository);
+        log.info("{}",albumController);
+        log.info("{}",categoryRepository);
     }
 
     @Autowired
@@ -51,9 +52,9 @@ class Jsdvn2203CsmallServerApplicationTests {
 
     @Test
     public void testAutowired(){
-        System.out.println(categoryController);
-        System.out.println(date);
-        System.out.println(brandController);
+        log.info("{}",categoryController);
+        log.info("{}",date);
+        log.info("{}",brandController);
     }
 
     @Autowired
@@ -65,14 +66,14 @@ class Jsdvn2203CsmallServerApplicationTests {
 
     @Test
     public void testBrandAutowired(){
-        System.out.println("通过Service"+brandService.brandRepository);
-        System.out.println("通过实现类获取"+brandRepository1);
-        System.out.println("通过接口获取"+brandRepository2);
+        log.info("通过Service:{}",brandService.brandRepository);
+        log.info("通过实现类获取:{}",brandRepository1);
+        log.info("通过接口获取:{}",brandRepository2);
     }
     @Autowired
     AlbumServiceImpl albumService;
     @Test
     public void testAlbumAutowired(){//对象的唯一性
-        System.out.println("通过Service"+albumService);
+        log.info("通过Service:{}",albumService);
     }
 }

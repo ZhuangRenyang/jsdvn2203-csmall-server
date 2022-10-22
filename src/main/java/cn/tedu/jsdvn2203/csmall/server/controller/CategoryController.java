@@ -1,22 +1,22 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
-import org.springframework.stereotype.Controller;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
+@Slf4j
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
 
     public CategoryController(){
-        System.out.println("创建控制器对象.CategoryController");
+        log.info("创建控制器对象.CategoryController");
     }
 
      //访问路径http://localhost:8080/category/delete?id=123&...
     @RequestMapping("/{id:[0-9]+}/delete")
     public String delete(@PathVariable("id") Long id){
-        System.out.println("id:"+id);
-        System.out.println("CategoryController.delete");
+        log.info("id:{}",id);
+        log.info("CategoryController.delete");
         return "del";
     }
 
@@ -27,27 +27,29 @@ public class CategoryController {
 //        return "del,name";
 //    }
 
-    //访问路径http://localhost:8080/category/add-new
+    //访问路径 http://localhost:8080/categories/add-new
 //    @RequestMapping(value = "/add-new",method = RequestMethod.POST)
 //    @RequestMapping({"/add-new"})
 //    @RequestMapping(value = {"/add-new"})
 //    @RequestMapping(value = "/add-new")
     @RequestMapping("/add-new")
     public String addNew(CategoryAddNewDTO categoryAddNewDTO){
-        System.out.println("categoryAddNewDTO:"+categoryAddNewDTO);
-        System.out.println("CategoryController.add-new");
+        log.info("categoryAddNewDTO:{}",categoryAddNewDTO);
+        log.info("CategoryController.add-new");
         return "add-new";
     }
     @RequestMapping("/{id}/update")
     public String update(@PathVariable("id") CategoryAddNewDTO categoryAddNewDTO){
-        System.out.println("categoryAddNewDTO:"+categoryAddNewDTO);
-        System.out.println("CategoryController.update");
+        log.info("categoryAddNewDTO:{}",categoryAddNewDTO);
+        log.info("CategoryController.update");
         return "update";
     }
-    //访问路径http://localhost:8080/category
+    //访问路径 http://localhost:8080/category
+    // @RequestMapping("/list")
+    // @RequestMapping("")
     @RequestMapping("")
     public String list(){
-        System.out.println("CategoryController.list");
+        log.info("CategoryController.list");
         return "list";
     }
 }

@@ -9,9 +9,22 @@
         values (
          #{name},#{description},#{sort},#{gmtCreate},#{gmtModified})
     </insert>
+
+<!--    int deleteById(Long id);-->
     <delete id="deleteById">
         delete from pms_album where id = #{id}
     </delete>
+
+    <!-- int deleteByIds(Long... ids); -->
+    <delete id="deleteByIds">
+        delete from pms_album where id in (
+            <foreach collection="array" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+    </delete>
+
+
     <update id="updateNameById">
         update pms_album set name = #{name} where id = #{id}
     </update>
