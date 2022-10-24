@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class BrandCategoryMapperTests {
     @Autowired
-   BrandCategoryMapper brandCategoryMapper;
+    BrandCategoryMapper brandCategoryMapper;
 
     @Test
     public void testInsert() {
@@ -20,6 +20,19 @@ public class BrandCategoryMapperTests {
         brandCategory.setCategoryId(categoryId);
         brandCategory.setBrandId(brandId);
         int rows = brandCategoryMapper.insert(brandCategory);
-        log.info("插入成功，受影响的行数：{}",rows);
+        log.info("插入成功，受影响的行数：{}", rows);
+    }
+
+    @Test
+    public void testDeleteById() {
+        Long id = 10L;
+        int rows = brandCategoryMapper.deleteById(id);
+        log.info("删除成功,受影响的行数:{}", rows);
+    }
+
+    @Test
+    public void testDeleteByIds(){
+        int rows = brandCategoryMapper.deleteByIds(11L,12L,13L);
+        log.info("批量删除成功,受影响的行数:{}",rows);
     }
 }

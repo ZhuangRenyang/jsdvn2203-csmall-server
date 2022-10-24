@@ -15,7 +15,7 @@ public class AttributeMapperTests {
     AttributeMapper attributeMapper;
 
     @Test
-    public void insert() {
+    public void testInsert() {
         Long templateId = 10L;
         String name = "哈哈哈";
         String description = "H";
@@ -28,14 +28,14 @@ public class AttributeMapperTests {
     }
 
     @Test
-    public void deleteById() {
+    public void testDeleteById() {
         Long id = 2L;
         int rows = attributeMapper.deleteById(id);
         log.info("删除成功，受影响的行数：{}", rows);
     }
 
     @Test
-    public void deleteByIds() {
+    public void testDeleteByIds() {
         int rows = attributeMapper.deleteByIds(11L, 12L, 13L);
         log.info("批量删除成功，受影响的行数：{}", rows);
     }

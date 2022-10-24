@@ -1,7 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.mapper;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Attribute;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
