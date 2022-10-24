@@ -30,7 +30,7 @@ public class AlbumMapperTests {
 
     @Test
     public void testDeleteByIds(){
-        int rows = albumMapper.deleteByIds(1L, 2L, 3L);
+        int rows = albumMapper.deleteByIds(1L,2L,3L);
         log.info("批量删除完成，受影响的行数={}",rows);
     }
 

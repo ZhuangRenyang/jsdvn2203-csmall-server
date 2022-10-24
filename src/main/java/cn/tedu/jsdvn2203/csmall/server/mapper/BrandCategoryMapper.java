@@ -1,17 +1,14 @@
 package cn.tedu.jsdvn2203.csmall.server.mapper;
 
-import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Attribute;
-import org.apache.ibatis.annotations.Param;
+import cn.tedu.jsdvn2203.csmall.server.pojo.entity.BrandCategory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttributeMapper {
+public interface BrandCategoryMapper {
 
-    int insert(Attribute attribute);
+    int insert(BrandCategory brandCategory);
 
     int deleteById(Long id);
 
     int deleteByIds(Long... ids);
-
-
 }

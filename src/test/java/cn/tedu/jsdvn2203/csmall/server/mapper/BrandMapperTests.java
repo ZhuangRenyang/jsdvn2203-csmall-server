@@ -50,11 +50,6 @@ public class BrandMapperTests {
         log.info("删除完成，受影响的行数={}",rows);
     }
     @Test
-    public void testDeleteByIds(){
-       int rows = brandMapper.deleteByIds(3L,4L,8L);
-        System.out.println("删除完成，受影响的行数="+rows);
-    }
-    @Test
     public void testUpdateNameById(){
         Long id = 3L;
         String name = "白萝卜";

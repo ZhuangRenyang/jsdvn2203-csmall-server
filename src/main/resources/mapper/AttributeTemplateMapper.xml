@@ -2,29 +2,19 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.AttributeMapper">
+<mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.AttributeTemplateMapper">
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO pms_attribute
-        (template_id,
+        INSERT INTO pms_attribute_template
+        (pinyin,
          name,
-         description,
-         type,
-         input_type,
-         value_list,
-         unit,
+         keywords,
          sort,
-         is_allow_customize,
          gmt_create,
          gmt_modified)
-        VALUES (#{templateId},
+        VALUES (#{pinyin},
                 #{name},
-                #{description},
-                #{type},
-                #{inputType},
-                #{valueList},
-                #{unit},
+                #{keywords},
                 #{sort},
-                #{isAllowCustomize},
                 #{gmtCreate},
                 #{gmtModified})
     </insert>
@@ -32,23 +22,17 @@
     <!--    int deleteById(Long id);-->
     <delete id="deleteById">
         DELETE
-        FROM pms_attribute
+        FROM pms_attribute_template
         WHERE id = #{id}
     </delete>
 
     <!-- int deleteByIds(Long... ids); -->
     <delete id="deleteByIds">
-        DELETE FROM pms_attribute WHERE id IN (
+        DELETE FROM pms_attribute_template WHERE IN (
         <foreach collection="array" item="id" separator=",">
             #{id}
         </foreach>
         )
     </delete>
 
-
-    <update id="updateNameById">
-        UPDATE pms_attribute
-        SET name = #{name}
-        WHERE id = #{id}
-    </update>
 </mapper>

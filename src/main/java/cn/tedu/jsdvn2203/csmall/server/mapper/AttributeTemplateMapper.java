@@ -1,17 +1,15 @@
 package cn.tedu.jsdvn2203.csmall.server.mapper;
 
-import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Attribute;
-import org.apache.ibatis.annotations.Param;
+
+import cn.tedu.jsdvn2203.csmall.server.pojo.entity.AttributeTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttributeMapper {
+public interface AttributeTemplateMapper {
 
-    int insert(Attribute attribute);
+    int insert(AttributeTemplate attributeTemplate);
 
     int deleteById(Long id);
 
     int deleteByIds(Long... ids);
-
-
 }
