@@ -1,10 +1,13 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
+import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
+import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/categories")
 public class CategoryController {
 
+@Autowired
+private ICategoryService categoryService;
 
     public CategoryController(){
         log.info("创建控制器对象.CategoryController");
@@ -23,11 +28,12 @@ public class CategoryController {
 //    @RequestMapping({"/add-new"})
 //    @RequestMapping(value = {"/add-new"})
 //    @RequestMapping(value = "/add-new")
-    @ApiOperation("添加品牌")
+    @ApiOperation("添加类别")
     @ApiOperationSupport(order = 10)
     @PostMapping("/add-new")
     public String addNew(CategoryAddNewDTO categoryAddNewDTO){
         log.info("categoryAddNewDTO:{}",categoryAddNewDTO);
+        categoryService.addNew(categoryAddNewDTO);
         log.info("CategoryController.add-new");
         return "add-new";
     }
@@ -41,9 +47,10 @@ public class CategoryController {
 //    }
      @ApiOperation("根据id删除类别")
      @ApiOperationSupport(order = 20)
-    @PostMapping("/{id:[0-9]+}/delete")
-    public String delete(@PathVariable("id") Long id){
-        log.info("id:{}",id);
+    @PostMapping("/delete")
+    public String delete(CategoryDeleteDTO categoryDeleteDTO){
+        log.info("id:{}",categoryDeleteDTO.getId());
+        categoryService.delete(categoryDeleteDTO);
         log.info("CategoryController.delete");
         return "del";
     }

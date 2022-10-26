@@ -1,14 +1,13 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
+import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,10 +40,11 @@ public class BrandController {
     @ApiOperation("根据id删除品牌")
     @ApiOperationSupport(order = 20)
     @PostMapping("/delete")
-    public String delete(Long id){
-        log.info("delete-id:{}",id);
+    public String delete(BrandDeleteDTO brandDeleteDTO){
+        log.info("delete-id:{}",brandDeleteDTO.getId());
         log.info("BrandController.delete");
-        return "delete:"+id;
+        brandService.delete(brandDeleteDTO);
+        return "delete:";
     }
 
     @ApiOperation("修改品牌")
