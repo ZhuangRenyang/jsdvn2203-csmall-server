@@ -2,6 +2,7 @@ package cn.tedu.jsdvn2203.csmall.server.service.impl;
 
 import cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
+import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Brand;
 import cn.tedu.jsdvn2203.csmall.server.repo.IBrandRepository;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
@@ -28,5 +29,14 @@ public class BrandServiceImpl implements IBrandService {
         int rows = brandMapper.insert(brand);
         log.info("插入成功,受影响的行数",rows);
 
+    }
+
+
+    @Override
+    public void delete(BrandDeleteDTO brandDeleteDTO) {
+        Brand brand = new Brand();
+        BeanUtils.copyProperties(brandDeleteDTO,brand);
+        int rows = brandMapper.deleteById(brand.getId());
+        log.info("删除成功，受影响的行数：{}",rows);
     }
 }

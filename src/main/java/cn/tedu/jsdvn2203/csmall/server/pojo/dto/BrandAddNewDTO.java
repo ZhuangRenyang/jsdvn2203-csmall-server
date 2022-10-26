@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Objects;
 /**
  * 新增商品DTO类
  *  添加set&get / equals&hashcode / toString 方法
