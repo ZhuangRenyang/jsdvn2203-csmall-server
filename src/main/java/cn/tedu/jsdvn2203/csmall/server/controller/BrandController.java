@@ -1,5 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
+import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
@@ -8,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +33,12 @@ public class BrandController {
     @ApiOperationSupport(order = 10)
     @PostMapping("/add-new")
     public String addNew(BrandAddNewDTO brandAddNewDTO){
-        log.info("brandAddNewDTO:{}",brandAddNewDTO);
-        log.info("BrandController.add-new");
-        brandService.addNew(brandAddNewDTO);
+        log.debug("接收到添加品牌的请求,参数:{}",brandAddNewDTO);
+        try {
+            brandService.addNew(brandAddNewDTO);
+        }catch (ServiceException e){
+            return e.getMessage();
+        }
         return "ok";
     }
     //访问路径http://localhost:8080/brands/delete?id=123&...
@@ -41,8 +46,7 @@ public class BrandController {
     @ApiOperationSupport(order = 20)
     @PostMapping("/delete")
     public String delete(BrandDeleteDTO brandDeleteDTO){
-        log.info("delete-id:{}",brandDeleteDTO.getId());
-        log.info("BrandController.delete");
+        log.debug("接收到删除品牌的请求,参数:{}",brandDeleteDTO.getId());
         brandService.delete(brandDeleteDTO);
         return "delete:";
     }

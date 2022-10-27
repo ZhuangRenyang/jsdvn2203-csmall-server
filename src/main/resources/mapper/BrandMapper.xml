@@ -6,24 +6,24 @@
 
     <!-- int insert(Brand brand);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into pms_brand(name, pinyin, logo, description, keywords,
+        INSERT INTO pms_brand(name, pinyin, logo, description, keywords,
                               sort, sales, product_count, comment_count, positive_comment_count,
                               enable, gmt_create, gmt_modified)
-        values (#{name}, #{pinyin}, #{logo}, #{description}, #{keywords},
+        VALUES (#{name}, #{pinyin}, #{logo}, #{description}, #{keywords},
                 #{sort}, #{sales}, #{productCount}, #{commentCount}, #{positiveCommentCount},
                 #{enable}, #{gmtCreate}, #{gmtModified})
     </insert>
 
     <!--    int deleteById(Long id);-->
     <delete id="deleteById">
-        delete
-        from pms_brand
-        where id = #{id}
+        DELETE
+        FROM pms_brand
+        WHERE id = #{id}
     </delete>
 
     <!-- int deleteByIds(Long... ids);-->
     <delete id="deleteByIds">
-        delete from pms_brand where id in (
+        DELETE FROM pms_brand WHERE id IN (
         <foreach collection="array" item="id" separator=",">
             #{id}
         </foreach>
@@ -33,14 +33,14 @@
     <!--int updateNameById(@Param("id") Long id,
             @Param("name") String name);-->
     <update id="updateNameById">
-        update pms_brand
-        set name =#{name}
-        where id = #{id}
+        UPDATE pms_brand
+        SET name =#{name}
+        WHERE id = #{id}
     </update>
 
     <!-- int updateById(Brand brand);-->
     <update id="updateById">
-        update pms_brand
+        UPDATE pms_brand
         <set>
             <if test="name != null">
                 name=#{name},
@@ -82,13 +82,20 @@
                 gmt_modified =#{gmtModified}
             </if>
         </set>
-        where id =#{id}
+        WHERE id =#{id}
     </update>
 
     <!--    int count();-->
     <select id="count" resultType="int">
         SELECT count(*)
         FROM pms_brand;
+    </select>
+
+    <!--    int countByName(String name);-->
+    <select id="countByName" resultMap="int">
+        SELECT COUNT(*)
+        FROM pms_brand
+        WHERE name = #{name}
     </select>
 
     <!--    BrandDetailVo getById-->

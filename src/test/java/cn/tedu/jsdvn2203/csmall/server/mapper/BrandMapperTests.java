@@ -15,8 +15,9 @@ import java.util.List;
 public class BrandMapperTests {
     @Autowired
     BrandMapper brandMapper;
+
     @Test
-    public void testInsert(){
+    public void testInsert() {
         String name = "虾米";
         String pinyin = "xiaomi";
         String logo = "xiaomi";
@@ -36,29 +37,32 @@ public class BrandMapperTests {
         brand.setProductCount(productCount);
         int rows = brandMapper.insert(brand);
         Long id = brand.getId();
-        log.info("插入成功,受影响的行数为:{},id值为:{}",rows,id);
-    }
-    @Test
-    public void testDeleteById(){
-        Long id = 1L;
-        int rows = brandMapper.deleteById(id);
-        log.info("删除完成，受影响的行数={}",rows);
-    }
-    @Test
-    public void testDeleteByIds(){
-       int rows = brandMapper.deleteByIds(3L,4L,8L);
-        log.info("删除完成，受影响的行数={}",rows);
-    }
-    @Test
-    public void testUpdateNameById(){
-        Long id = 3L;
-        String name = "白萝卜";
-        int rows = brandMapper.updateNameById(id, name);
-        log.info("修改品牌名称完成，受影响的行数={}",rows);
+        log.info("插入成功,受影响的行数为:{},id值为:{}", rows, id);
     }
 
     @Test
-    public void testUpdateById(){
+    public void testDeleteById() {
+        Long id = 1L;
+        int rows = brandMapper.deleteById(id);
+        log.info("删除完成，受影响的行数={}", rows);
+    }
+
+    @Test
+    public void testDeleteByIds() {
+        int rows = brandMapper.deleteByIds(3L, 4L, 8L);
+        log.info("删除完成，受影响的行数={}", rows);
+    }
+
+    @Test
+    public void testUpdateNameById() {
+        Long id = 3L;
+        String name = "白萝卜";
+        int rows = brandMapper.updateNameById(id, name);
+        log.info("修改品牌名称完成，受影响的行数={}", rows);
+    }
+
+    @Test
+    public void testUpdateById() {
         Long id = 9L;
         String name = "小米";
         String pinyin = "xiaomi";
@@ -67,20 +71,26 @@ public class BrandMapperTests {
         brand.setName(name);
         brand.setPinyin(pinyin);
         int rows = brandMapper.updateById(brand);
-        log.info("修改品牌名称完成，受影响的行数={}",rows);
+        log.info("修改品牌名称完成，受影响的行数={}", rows);
     }
 
     @Test
-    public void testCount(){
+    public void testCount() {
         int count = brandMapper.count();
-        log.info("统计品牌数量完成,统计结果 ={}",count);
+        log.info("统计品牌数量完成,统计结果 ={}", count);
     }
-    
+
+    public void testCountByName() {
+        String name = "华为";
+        int rows = brandMapper.countByName(name);
+        log.debug("根据名称:{},统计品牌数量为:{}", name, rows);
+    }
+
     @Test
-    public void testGetById(){
+    public void testGetById() {
         Long id = 13L;
         BrandDetailVO brandDetailVO = brandMapper.getById(id);
-        log.info("查询的结果:{}",brandDetailVO);
+        log.info("查询的结果:{}", brandDetailVO);
     }
 
     @Test
@@ -88,12 +98,12 @@ public class BrandMapperTests {
         List<BrandListItemVO> list = brandMapper.list();
         log.info("查询的结果:{}", list.size());
         for (BrandListItemVO itemVO : list) {
-            log.info("{}",itemVO);
+            log.info("{}", itemVO);
         }
     }
 
     @Test
-    public void testLogLeve(){
+    public void testLogLeve() {
         log.trace("这是trace级别的日志...");
         log.debug("这是debug级别的日志...");
         log.info("这是info级别的日志...");

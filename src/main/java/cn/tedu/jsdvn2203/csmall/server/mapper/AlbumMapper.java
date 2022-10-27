@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AlbumMapper {
+
+    /**
+     * 新建相册
+     * @param album 相册数据
+     * @return 受影响的行数
+     */
     int insert(Album album);
 
     int deleteById(Long id);
