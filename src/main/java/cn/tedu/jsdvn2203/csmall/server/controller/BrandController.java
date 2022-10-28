@@ -9,7 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +46,11 @@ public class BrandController {
     @PostMapping("/delete")
     public String delete(BrandDeleteDTO brandDeleteDTO){
         log.debug("接收到删除品牌的请求,参数:{}",brandDeleteDTO.getId());
-        brandService.delete(brandDeleteDTO);
+        try {
+            brandService.delete(brandDeleteDTO);
+        }catch (ServiceException e){
+         return e.getMessage();
+        }
         return "delete:";
     }
 

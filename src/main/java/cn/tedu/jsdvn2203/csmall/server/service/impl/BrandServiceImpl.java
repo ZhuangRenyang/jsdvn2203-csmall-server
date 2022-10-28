@@ -12,10 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletException;
-
 @Slf4j
-
 @Service
 public class BrandServiceImpl implements IBrandService {
 
@@ -57,6 +54,13 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public void delete(BrandDeleteDTO brandDeleteDTO) {
+        Long id = brandDeleteDTO.getId();
+        int count = brandMapper.countById(id);
+        if (count==0){
+            String message = "删除失败,品牌id["+id+"]不存在";
+            throw new ServiceException(message);
+        }
+
         Brand brand = new Brand();
         BeanUtils.copyProperties(brandDeleteDTO, brand);
         int rows = brandMapper.deleteById(brand.getId());

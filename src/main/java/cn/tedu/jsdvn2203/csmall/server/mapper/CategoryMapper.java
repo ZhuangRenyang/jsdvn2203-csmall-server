@@ -11,4 +11,8 @@ public interface CategoryMapper {
     int deleteById(Long id);
 
     int deleteByIds(Long... id);
+
+    int countByName(String name);
+
+    int countById(Long id);
 }

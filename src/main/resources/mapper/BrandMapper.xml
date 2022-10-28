@@ -92,10 +92,16 @@
     </select>
 
     <!--    int countByName(String name);-->
-    <select id="countByName" resultMap="int">
+    <select id="countByName" resultType="int">
         SELECT COUNT(*)
         FROM pms_brand
         WHERE name = #{name}
+    </select>
+
+    <select id="countById" resultType="int">
+        SELECT COUNT(*)
+        FROM pms_brand
+        WHERE id = #{id}
     </select>
 
     <!--    BrandDetailVo getById-->

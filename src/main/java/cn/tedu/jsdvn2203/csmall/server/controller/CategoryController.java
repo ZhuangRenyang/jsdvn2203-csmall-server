@@ -1,5 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
+import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
@@ -32,9 +33,12 @@ private ICategoryService categoryService;
     @ApiOperationSupport(order = 10)
     @PostMapping("/add-new")
     public String addNew(CategoryAddNewDTO categoryAddNewDTO){
-        log.info("categoryAddNewDTO:{}",categoryAddNewDTO);
-        categoryService.addNew(categoryAddNewDTO);
-        log.info("CategoryController.add-new");
+        log.info("接收到添加类别的请求,参数:{}",categoryAddNewDTO);
+        try {
+            categoryService.addNew(categoryAddNewDTO);
+        }catch (ServiceException e){
+            return e.getMessage();
+        }
         return "add-new";
     }
 
@@ -49,9 +53,13 @@ private ICategoryService categoryService;
      @ApiOperationSupport(order = 20)
     @PostMapping("/delete")
     public String delete(CategoryDeleteDTO categoryDeleteDTO){
+
         log.info("id:{}",categoryDeleteDTO.getId());
-        categoryService.delete(categoryDeleteDTO);
-        log.info("CategoryController.delete");
+        try {
+            categoryService.delete(categoryDeleteDTO);
+        }catch (ServiceException e){
+            return e.getMessage();
+        }
         return "del";
     }
 

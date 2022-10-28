@@ -72,6 +72,8 @@ public interface BrandMapper {
      */
     int countByName(String name);
 
+    int countById(Long id);
+
     /**
      * 根据id查询品牌详情
      *

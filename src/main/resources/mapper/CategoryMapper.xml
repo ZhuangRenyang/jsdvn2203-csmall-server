@@ -38,9 +38,22 @@
         DELETE
         FROM pms_category
         WHERE IN (
-        <foreach collection="array" item="id" separator="," >
+        <foreach collection="array" item="id" separator=",">
             #{id}
         </foreach>
-            )
+        )
     </delete>
+
+    <!--    int countByName(String name);-->
+    <select id="countByName" resultType="int">
+        SELECT COUNT(*)
+        FROM pms_category
+        WHERE name = #{name}
+    </select>
+
+    <select id="countById" resultType="int">
+        SELECT COUNT(*)
+        FROM pms_category
+        WHERE id = #{id}
+    </select>
 </mapper>
