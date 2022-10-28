@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.AlbumMapper">
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into pms_album(
-        name, description, sort, gmt_create, gmt_modified)
-        values (
-         #{name},#{description},#{sort},#{gmtCreate},#{gmtModified})
+        INSERT INTO pms_album(name, description, sort, gmt_create, gmt_modified)
+        VALUES (#{name}, #{description}, #{sort}, #{gmtCreate}, #{gmtModified})
     </insert>
 
-<!--    int deleteById(Long id);-->
+    <!--    int deleteById(Long id);-->
     <delete id="deleteById">
-        delete from pms_album where id = #{id}
+        DELETE
+        FROM pms_album
+        WHERE id = #{id}
     </delete>
 
     <!-- int deleteByIds(Long... ids); -->
     <delete id="deleteByIds">
-        delete from pms_album where id in (
-            <foreach collection="array" item="id" separator=",">
-                #{id}
-            </foreach>
-            )
+        DELETE FROM pms_album WHERE id IN (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
     </delete>
 
-
     <update id="updateNameById">
-        update pms_album set name = #{name} where id = #{id}
+        UPDATE pms_album
+        SET name = #{name}
+        WHERE id = #{id}
     </update>
+
+    <select id="countByName" resultType="int">
+        SELECT COUNT(*)
+        FROM pms_album
+        WHERE name = #{name}
+    </select>
+
+    <select id="countById" resultType="int">
+        SELECT COUNT(*)
+        FROM pms_album
+        WHERE id = #{id}
+    </select>
 </mapper>
