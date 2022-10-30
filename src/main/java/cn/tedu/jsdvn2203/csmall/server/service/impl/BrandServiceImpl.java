@@ -7,6 +7,7 @@ import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Brand;
 import cn.tedu.jsdvn2203.csmall.server.repo.IBrandRepository;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
+import cn.tedu.jsdvn2203.csmall.server.web.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,29 +25,31 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public void addNew(BrandAddNewDTO brandAddNewDTO) {
-//        String s = null;//测试
-//        System.out.println(s.length());//测试
 
         //检查品牌名称是否被占用
-        String name = brandAddNewDTO.getName();
-        int count = brandMapper.countByName(name);
+        String name = brandAddNewDTO.getName();//获取品牌的名称
+        int count = brandMapper.countByName(name);//查询是否有该名称
         if (count > 0) {
             String message = "添加失败,品牌名称[" + name + "]已存在";
             log.error(message);
-            throw new ServiceException(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);//错误：冲突 - 重复数据
         }
 
         //创建实体对象(Mapper的方法参数是实体类型)
         Brand brand = new Brand();
         //将当前方法参数的值复制到brand 实体类型的对象中
-        BeanUtils.copyProperties(brandAddNewDTO, brand);
+        BeanUtils.copyProperties(brandAddNewDTO, brand);//类型转换赋值
         //补齐属性值
         brand.setSales(0);
         brand.setProductCount(0);
         brand.setCommentCount(0);
         brand.setPositiveCommentCount(0);
         brand.setEnable(0);
-        int rows = brandMapper.insert(brand);
+        int rows = brandMapper.insert(brand);//执行插入
+        if (rows != 1){
+            String message = "添加品牌失败,服务器忙,请稍后重试!";
+            throw new ServiceException(ServiceCode.ERR_INSERT,message);//错误：插入失败
+        }
         log.info("插入成功,受影响的行数", rows);
 
     }
@@ -54,16 +57,17 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public void delete(BrandDeleteDTO brandDeleteDTO) {
-        Long id = brandDeleteDTO.getId();
-        int count = brandMapper.countById(id);
+        //检查品牌id是否存在
+        Long id = brandDeleteDTO.getId();//获取品牌id的名称
+        int count = brandMapper.countById(id);//查询是否存在该id
         if (count==0){
             String message = "删除失败,品牌id["+id+"]不存在";
-            throw new ServiceException(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);//错误：冲突 - 重复数据
         }
 
         Brand brand = new Brand();
-        BeanUtils.copyProperties(brandDeleteDTO, brand);
-        int rows = brandMapper.deleteById(brand.getId());
+        BeanUtils.copyProperties(brandDeleteDTO, brand);//类型转换赋值
+        int rows = brandMapper.deleteById(brand.getId());//执行删除
         log.info("删除成功，受影响的行数：{}", rows);
     }
 }

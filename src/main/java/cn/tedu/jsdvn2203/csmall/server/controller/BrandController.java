@@ -1,18 +1,17 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
-import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
+import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Api(tags = "2.品牌管理模块")
@@ -31,42 +30,35 @@ public class BrandController {
     @ApiOperation("添加品牌")
     @ApiOperationSupport(order = 10)
     @PostMapping("/add-new")
-    public String addNew(BrandAddNewDTO brandAddNewDTO){
-        log.debug("接收到添加品牌的请求,参数:{}",brandAddNewDTO);
-        try {
-            brandService.addNew(brandAddNewDTO);
-        }catch (ServiceException e){
-            return e.getMessage();
-        }
-        return "ok";
+    public JsonResult addNew(@RequestBody @Valid BrandAddNewDTO brandAddNewDTO) {
+        log.debug("接收到添加品牌的请求,参数:{}", brandAddNewDTO);
+        brandService.addNew(brandAddNewDTO);
+        return JsonResult.ok();
     }
+
     //访问路径http://localhost:8080/brands/delete?id=123&...
     @ApiOperation("根据id删除品牌")
     @ApiOperationSupport(order = 20)
     @PostMapping("/delete")
-    public String delete(BrandDeleteDTO brandDeleteDTO){
-        log.debug("接收到删除品牌的请求,参数:{}",brandDeleteDTO.getId());
-        try {
-            brandService.delete(brandDeleteDTO);
-        }catch (ServiceException e){
-         return e.getMessage();
-        }
+    public String delete(BrandDeleteDTO brandDeleteDTO) {
+        log.debug("接收到删除品牌的请求,参数:{}", brandDeleteDTO.getId());
+        brandService.delete(brandDeleteDTO);
         return "delete:";
     }
 
     @ApiOperation("修改品牌")
     @ApiOperationSupport(order = 30)
     @PostMapping("/update")
-    public String update(Long id){
-        log.info("update-id:{}",id);
+    public String update(Long id) {
+        log.info("update-id:{}", id);
         log.info("BrandController.update");
-        return "update:"+id;
+        return "update:" + id;
     }
 
     @ApiOperation("查询品牌列表")
     @ApiOperationSupport(order = 40)
     @GetMapping("/list")
-    public String list(){
+    public String list() {
         log.info("BrandController.list");
         return "list";
     }

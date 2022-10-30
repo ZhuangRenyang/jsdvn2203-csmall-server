@@ -8,22 +8,14 @@ package cn.tedu.jsdvn2203.csmall.server.exception;
  */
 public class ServiceException extends RuntimeException{
 
-    public ServiceException() {
-    }
+    private Integer serviceCode;
 
-    public ServiceException(String message) {
+    public ServiceException(Integer serviceCode, String message) {
         super(message);
-    }
+        this.serviceCode = serviceCode;
+     }
 
-    public ServiceException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public ServiceException(Throwable cause) {
-        super(cause);
-    }
-
-    public ServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public Integer getServiceCode() {
+        return serviceCode;
     }
 }

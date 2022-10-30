@@ -33,11 +33,7 @@ public class AlbumController {
     @PostMapping("/add-new")
     public String addNew(AlbumAddNewDTO albumAddNewDTO){
         log.debug("接收到添加相册的请求,参数:{}",albumAddNewDTO);
-        try {
             albumService.addNew(albumAddNewDTO);
-        }catch (ServiceException e){
-            return e.getMessage();
-        }
         return "ok";
     }
 
@@ -46,11 +42,7 @@ public class AlbumController {
     @PostMapping("/delete")
     public String delete(AlbumDeleteDTO albumDeleteDTO){
         log.debug("接收到删除相册的请求,参数:{}",albumDeleteDTO);
-        try {
             albumService.delete(albumDeleteDTO);
-        }catch (ServiceException e){
-            return e.getMessage();
-        }
         return "delete";
     }
 }

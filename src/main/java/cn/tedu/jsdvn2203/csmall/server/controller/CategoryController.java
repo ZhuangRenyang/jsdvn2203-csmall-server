@@ -34,11 +34,7 @@ private ICategoryService categoryService;
     @PostMapping("/add-new")
     public String addNew(CategoryAddNewDTO categoryAddNewDTO){
         log.info("接收到添加类别的请求,参数:{}",categoryAddNewDTO);
-        try {
             categoryService.addNew(categoryAddNewDTO);
-        }catch (ServiceException e){
-            return e.getMessage();
-        }
         return "add-new";
     }
 
@@ -55,11 +51,7 @@ private ICategoryService categoryService;
     public String delete(CategoryDeleteDTO categoryDeleteDTO){
 
         log.info("id:{}",categoryDeleteDTO.getId());
-        try {
             categoryService.delete(categoryDeleteDTO);
-        }catch (ServiceException e){
-            return e.getMessage();
-        }
         return "del";
     }
 

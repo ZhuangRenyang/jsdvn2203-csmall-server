@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.AlbumMapper">
+    <!--    int insert(Album album);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pms_album(name, description, sort, gmt_create, gmt_modified)
         VALUES (#{name}, #{description}, #{sort}, #{gmtCreate}, #{gmtModified})
@@ -23,19 +24,19 @@
         </foreach>
         )
     </delete>
-
+    <!--    int updateNameById(@Param("id") Long id,@Param("name") String name);-->
     <update id="updateNameById">
         UPDATE pms_album
         SET name = #{name}
         WHERE id = #{id}
     </update>
-
+    <!--    int countByName(String name);-->
     <select id="countByName" resultType="int">
         SELECT COUNT(*)
         FROM pms_album
         WHERE name = #{name}
     </select>
-
+    <!--    int countById(Long id);-->
     <select id="countById" resultType="int">
         SELECT COUNT(*)
         FROM pms_album

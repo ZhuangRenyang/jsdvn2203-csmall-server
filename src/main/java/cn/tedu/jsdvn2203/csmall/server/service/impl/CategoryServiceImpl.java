@@ -6,6 +6,7 @@ import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Category;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
+import cn.tedu.jsdvn2203.csmall.server.web.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,31 +25,38 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public void addNew(CategoryAddNewDTO categoryAddNewDTO) {
-        String name = categoryAddNewDTO.getName();
-        int count = categoryMapper.countByName(name);
+        //检查类别名称是否被占用
+        String name = categoryAddNewDTO.getName();//获取类别名称
+        int count = categoryMapper.countByName(name);//查询是否有该名称
         if (count > 0) {
             String message = "添加失败,类别名称[" + name + "]已存在";
             log.error(message);
-            throw new ServiceException(message);
+            throw new ServiceException(ServiceCode.ERR_CONFLICT, message);//错误：冲突 - 重复数据
         }
 
-        Category category = new Category();
-        BeanUtils.copyProperties(categoryAddNewDTO, category);
-        int rows = categoryMapper.insert(category);
+        Category category = new Category();//创建实体类
+        BeanUtils.copyProperties(categoryAddNewDTO, category);//类型转换赋值
+        int rows = categoryMapper.insert(category);//执行插入
+        if (rows != 1) {
+            String message = "添加品牌失败,服务器忙,请稍后重试!";
+            log.error(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);//错误：插入失败
+        }
         log.info("插入成功，受影响的行数：{}", rows);
     }
 
     @Override
     public void delete(CategoryDeleteDTO categoryDeleteDTO) {
-        Long id = categoryDeleteDTO.getId();
-        int count = categoryMapper.countById(id);
+        //检查类别id是否存在
+        Long id = categoryDeleteDTO.getId();//获取类别id
+        int count = categoryMapper.countById(id);//查询是否有该id
         if (count == 0) {
             String message = "删除失败，类别id[" + id + "]不存在";
-            throw new ServiceException(message);
+            throw new ServiceException(ServiceCode.ERR_DELETE, message);//错误：冲突 - 重复数据
         }
-        Category category = new Category();
-        BeanUtils.copyProperties(categoryDeleteDTO, category);
-        int rows = categoryMapper.deleteById(category.getId());
+        Category category = new Category();//创建实体类
+        BeanUtils.copyProperties(categoryDeleteDTO, category);//类型转换赋值
+        int rows = categoryMapper.deleteById(category.getId());//执行删除
         log.info("删除成功,受影响的行数:{}", rows);
     }
 }
