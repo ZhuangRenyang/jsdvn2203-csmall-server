@@ -1,15 +1,17 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
-import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
+import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Api(tags ="1.类别管理模块")
@@ -32,10 +34,10 @@ private ICategoryService categoryService;
     @ApiOperation("添加类别")
     @ApiOperationSupport(order = 10)
     @PostMapping("/add-new")
-    public String addNew(CategoryAddNewDTO categoryAddNewDTO){
+    public JsonResult addNew(@RequestBody @Valid CategoryAddNewDTO categoryAddNewDTO){
         log.info("接收到添加类别的请求,参数:{}",categoryAddNewDTO);
             categoryService.addNew(categoryAddNewDTO);
-        return "add-new";
+        return JsonResult.ok();
     }
 
      //访问路径 http://localhost:8080/category/delete?id=123&...
