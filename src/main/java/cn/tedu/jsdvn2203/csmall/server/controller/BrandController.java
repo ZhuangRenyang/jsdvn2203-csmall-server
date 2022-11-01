@@ -2,6 +2,7 @@ package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
+import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
 import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Api(tags = "2.品牌管理模块")
@@ -57,9 +59,10 @@ public class BrandController {
 
     @ApiOperation("查询品牌列表")
     @ApiOperationSupport(order = 40)
-    @GetMapping("/list")
-    public String list() {
+    @GetMapping("")
+    public JsonResult list() {
         log.info("BrandController.list");
-        return "list";
+        List<BrandListItemVO> list = brandService.list();
+        return JsonResult.ok(list);
     }
 }

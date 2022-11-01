@@ -1,7 +1,10 @@
 package cn.tedu.jsdvn2203.csmall.server.mapper;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Category;
+import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CategoryMapper {
@@ -15,4 +18,6 @@ public interface CategoryMapper {
     int countByName(String name);
 
     int countById(Long id);
+
+    List<CategoryListItemVO> list();
 }

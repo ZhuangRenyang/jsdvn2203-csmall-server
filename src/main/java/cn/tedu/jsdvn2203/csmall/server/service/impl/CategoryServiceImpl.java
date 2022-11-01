@@ -5,12 +5,15 @@ import cn.tedu.jsdvn2203.csmall.server.mapper.CategoryMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Category;
+import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
 import cn.tedu.jsdvn2203.csmall.server.web.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -24,7 +27,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public void addNew(CategoryAddNewDTO categoryAddNewDTO) {
+    public void insert(CategoryAddNewDTO categoryAddNewDTO) {
         //检查类别名称是否被占用
         String name = categoryAddNewDTO.getName();//获取类别名称
         int count = categoryMapper.countByName(name);//查询是否有该名称
@@ -46,6 +49,12 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    public List<CategoryListItemVO> list() {
+        log.debug("处理查询分类列表的业务...");
+        return categoryMapper.list();
+    }
+
+    @Override
     public void delete(CategoryDeleteDTO categoryDeleteDTO) {
         //检查类别id是否存在
         Long id = categoryDeleteDTO.getId();//获取类别id
@@ -59,4 +68,6 @@ public class CategoryServiceImpl implements ICategoryService {
         int rows = categoryMapper.deleteById(category.getId());//执行删除
         log.info("删除成功,受影响的行数:{}", rows);
     }
+
+
 }

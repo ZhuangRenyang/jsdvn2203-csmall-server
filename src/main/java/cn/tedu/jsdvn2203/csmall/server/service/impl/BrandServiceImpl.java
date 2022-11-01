@@ -5,6 +5,7 @@ import cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Brand;
+import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.repo.IBrandRepository;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
 import cn.tedu.jsdvn2203.csmall.server.web.ServiceCode;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -52,6 +55,12 @@ public class BrandServiceImpl implements IBrandService {
         }
         log.info("插入成功,受影响的行数", rows);
 
+    }
+
+    @Override
+    public List<BrandListItemVO> list() {
+        log.debug("处理查询品牌列表的业务...");
+        return brandMapper.list();
     }
 
 

@@ -9,11 +9,11 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry){
-        registry.addMapping("/**")
-                .allowedOriginPatterns("*")
-                .allowedHeaders("*")
-                .allowedMethods("*")
-                .allowCredentials(true)
+        registry.addMapping("/**")    //配置被跨域路径(具体地址)
+                .allowedOriginPatterns("*")      //项目的所有接口支持跨域
+                .allowedHeaders("*")             //属性表示允许的请求头有哪些
+                .allowedMethods("*")             //请求方式:post/get/put/
+                .allowCredentials(true)          //是否允许
                 .maxAge(3600);
     }
 }

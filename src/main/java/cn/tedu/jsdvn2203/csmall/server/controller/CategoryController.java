@@ -2,6 +2,7 @@ package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
+import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
 import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Api(tags ="1.类别管理模块")
@@ -36,7 +38,7 @@ private ICategoryService categoryService;
     @PostMapping("/add-new")
     public JsonResult addNew(@RequestBody @Valid CategoryAddNewDTO categoryAddNewDTO){
         log.info("接收到添加类别的请求,参数:{}",categoryAddNewDTO);
-            categoryService.addNew(categoryAddNewDTO);
+            categoryService.insert(categoryAddNewDTO);
         return JsonResult.ok();
     }
 
@@ -71,8 +73,9 @@ private ICategoryService categoryService;
     @ApiOperation("查询类别列表")
     @ApiOperationSupport(order = 40)
     @GetMapping("")
-    public String list(){
+    public JsonResult list(){
         log.info("CategoryController.list");
-        return "list";
+        List<CategoryListItemVO> list = categoryService.list();
+        return JsonResult.ok(list);
     }
 }

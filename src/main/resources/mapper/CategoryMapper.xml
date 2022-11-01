@@ -56,4 +56,36 @@
         FROM pms_category
         WHERE id = #{id}
     </select>
+
+    <select id="list" resultMap="ListItemResultMap">
+        SELECT
+        <include refid="ListItemQueryFields"/>
+        FROM pms_category
+        ORDER BY id
+    </select>
+
+    <resultMap id="ListItemResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO">
+        <result column="parent_id" property="parentId" ></result>
+        <result column="is_parent" property="isParent" ></result>
+        <result column="is_display" property="isDisplay" ></result>
+        <result column="gmt_create" property="gmtCreate" ></result>
+        <result column="gmt_modified" property="gmtModified" ></result>
+    </resultMap>
+
+    <sql id="ListItemQueryFields">
+        <if test="true">
+            id,
+            name,
+            parent_id,
+            depth,
+            keywords,
+            sort,
+            icon,
+            enable,
+            is_parent,
+            is_display,
+            gmt_create,
+            gmt_modified
+        </if>
+    </sql>
 </mapper>
