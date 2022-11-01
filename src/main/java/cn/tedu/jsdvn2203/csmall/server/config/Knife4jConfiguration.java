@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @Configuration
 @EnableSwagger2WebMvc
 public class Knife4jConfiguration {
-
+//测试 http://localhost:8080/doc.html#/home
     /**
      * 【重要】指定Controller包路径
      */

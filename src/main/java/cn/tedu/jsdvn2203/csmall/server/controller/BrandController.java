@@ -26,7 +26,7 @@ public class BrandController {
         log.info("创建控制器对象.BrandController");
     }
 
-    //测试 http://localhost:8080/doc.html#/home
+
     @ApiOperation("添加品牌")
     @ApiOperationSupport(order = 10)
     @PostMapping("/add-new")
