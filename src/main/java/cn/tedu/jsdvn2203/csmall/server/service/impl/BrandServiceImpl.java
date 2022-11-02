@@ -1,5 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.service.impl;
 
+import cn.tedu.jsdvn2203.csmall.server.config.BeanConfig;
 import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
@@ -14,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -48,6 +50,7 @@ public class BrandServiceImpl implements IBrandService {
         brand.setCommentCount(0);
         brand.setPositiveCommentCount(0);
         brand.setEnable(0);
+        brand.setGmtCreate(BeanConfig.localDateTime());
         int rows = brandMapper.insert(brand);//执行插入
         if (rows != 1){
             String message = "添加品牌失败,服务器忙,请稍后重试!";
@@ -77,6 +80,11 @@ public class BrandServiceImpl implements IBrandService {
         Brand brand = new Brand();
         BeanUtils.copyProperties(brandDeleteDTO, brand);//类型转换赋值
         int rows = brandMapper.deleteById(brand.getId());//执行删除
+        if (rows != 1){
+            String message = "删除品牌失败,服务器忙,请稍后重试!";
+            log.error(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);//错误：删除失败
+        }
         log.info("删除成功，受影响的行数：{}", rows);
     }
 }

@@ -55,4 +55,7 @@ public class BrandListItemVO implements Serializable {
      */
     private Integer enable;
 
+    private String gmtCreate;
+
+    private String gmtModified;
 }

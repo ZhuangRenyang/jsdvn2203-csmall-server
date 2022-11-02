@@ -16,4 +16,6 @@ public class CategoryListItemVO implements Serializable {
     private Integer enable;
     private Integer isParent;
     private Integer isDisplay;
+    private String gmtCreate;
+    private String gmtModified;
 }

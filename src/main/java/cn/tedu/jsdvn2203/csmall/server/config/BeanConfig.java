@@ -14,7 +14,7 @@ public class BeanConfig {
 
     @Lazy
     @Bean
-    public Date date(){
+    public static Date date(){
         log.info("BeanConfig.date()");
 //        Date date = new Date();
 //        log.info("当前系统时间:{}",date);
@@ -22,10 +22,9 @@ public class BeanConfig {
     }
 
     @Bean
-    public LocalDateTime localDateTime(){
+    public static LocalDateTime localDateTime(){
         log.info("BeanConfig.localDateTime()");
         return LocalDateTime.now();
     }
-
 
 }

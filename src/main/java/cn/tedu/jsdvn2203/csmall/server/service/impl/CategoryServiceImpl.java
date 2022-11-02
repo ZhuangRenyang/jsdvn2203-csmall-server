@@ -1,5 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.service.impl;
 
+import cn.tedu.jsdvn2203.csmall.server.config.BeanConfig;
 import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.mapper.CategoryMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
@@ -39,6 +40,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
         Category category = new Category();//创建实体类
         BeanUtils.copyProperties(categoryAddNewDTO, category);//类型转换赋值
+        category.setGmtCreate(BeanConfig.localDateTime());
         int rows = categoryMapper.insert(category);//执行插入
         if (rows != 1) {
             String message = "添加品牌失败,服务器忙,请稍后重试!";
@@ -61,13 +63,18 @@ public class CategoryServiceImpl implements ICategoryService {
         int count = categoryMapper.countById(id);//查询是否有该id
         if (count == 0) {
             String message = "删除失败，类别id[" + id + "]不存在";
+            log.info("删除失败:{}", message);
             throw new ServiceException(ServiceCode.ERR_DELETE, message);//错误：冲突 - 重复数据
         }
         Category category = new Category();//创建实体类
         BeanUtils.copyProperties(categoryDeleteDTO, category);//类型转换赋值
         int rows = categoryMapper.deleteById(category.getId());//执行删除
+        if (rows != 1){
+            String message = "删除类别失败,服务器忙,请稍后重试!";
+            log.error(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);//错误：删除失败
+        }
         log.info("删除成功,受影响的行数:{}", rows);
     }
-
 
 }

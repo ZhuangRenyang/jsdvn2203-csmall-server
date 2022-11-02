@@ -42,10 +42,10 @@ public class BrandController {
     @ApiOperation("根据id删除品牌")
     @ApiOperationSupport(order = 20)
     @PostMapping("/delete")
-    public String delete(BrandDeleteDTO brandDeleteDTO) {
+    public JsonResult delete(@RequestBody @Valid BrandDeleteDTO brandDeleteDTO) {
         log.debug("接收到删除品牌的请求,参数:{}", brandDeleteDTO.getId());
         brandService.delete(brandDeleteDTO);
-        return "delete:";
+        return JsonResult.ok();
     }
 
     @ApiOperation("修改品牌")

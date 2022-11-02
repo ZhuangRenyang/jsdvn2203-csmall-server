@@ -51,9 +51,9 @@ private ICategoryService categoryService;
 //    }
      @ApiOperation("根据id删除类别")
      @ApiOperationSupport(order = 20)
-    @GetMapping("/delete")
-    public JsonResult delete(@RequestBody CategoryDeleteDTO categoryDeleteDTO){
-        log.info("id:{}",categoryDeleteDTO.getId());
+    @PostMapping("/delete")
+    public JsonResult delete(@RequestBody @Valid CategoryDeleteDTO categoryDeleteDTO){
+        log.info("接收到删除类别的请求,参数id:{}",categoryDeleteDTO.getId());
             categoryService.delete(categoryDeleteDTO);
         return JsonResult.ok();
     }

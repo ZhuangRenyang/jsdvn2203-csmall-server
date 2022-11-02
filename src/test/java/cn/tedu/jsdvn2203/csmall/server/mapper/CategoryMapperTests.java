@@ -27,7 +27,7 @@ public class CategoryMapperTests {
 
     @Test
     public void testDeleteById(){
-        Long id = 10L;
+        Long id = 14L;
         int rows = categoryMapper.deleteById(id);
         log.info("删除成功,受影响的行数:{}",rows);
     }
