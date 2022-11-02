@@ -51,12 +51,11 @@ private ICategoryService categoryService;
 //    }
      @ApiOperation("根据id删除类别")
      @ApiOperationSupport(order = 20)
-    @PostMapping("/delete")
-    public String delete(CategoryDeleteDTO categoryDeleteDTO){
-
+    @GetMapping("/delete")
+    public JsonResult delete(@RequestBody CategoryDeleteDTO categoryDeleteDTO){
         log.info("id:{}",categoryDeleteDTO.getId());
             categoryService.delete(categoryDeleteDTO);
-        return "del";
+        return JsonResult.ok();
     }
 
     @ApiOperation("修改类别")
