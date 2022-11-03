@@ -16,7 +16,8 @@ public interface ICategoryService {
      */
     List<CategoryListItemVO> list();
 
-    void delete(CategoryDeleteDTO categoryDeleteDTO);
+//    void delete(CategoryDeleteDTO categoryDeleteDTO);
 
+    void deleteById(Long id);
 
 }

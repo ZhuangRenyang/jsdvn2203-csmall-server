@@ -4,9 +4,9 @@ import cn.tedu.jsdvn2203.csmall.server.config.BeanConfig;
 import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandUpdateDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Brand;
+import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandDetailVO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.repo.IBrandRepository;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
@@ -16,7 +16,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -46,12 +45,12 @@ public class BrandServiceImpl implements IBrandService {
         //将当前方法参数的值复制到brand 实体类型的对象中
         BeanUtils.copyProperties(brandAddNewDTO, brand);//类型转换赋值
         //补齐属性值
-        brand.setSales(0);
-        brand.setProductCount(0);
-        brand.setCommentCount(0);
-        brand.setPositiveCommentCount(0);
-        brand.setEnable(0);
-        brand.setGmtCreate(BeanConfig.localDateTime());
+//        brand.setSales(0);
+//        brand.setProductCount(0);
+//        brand.setCommentCount(0);
+//        brand.setPositiveCommentCount(0);
+//        brand.setEnable(0);
+        brand.setGmtCreate(BeanConfig.localDateTime());//创建时间
         int rows = brandMapper.insert(brand);//执行插入
         if (rows != 1){
             String message = "添加品牌失败,服务器忙,请稍后重试!";
@@ -67,28 +66,43 @@ public class BrandServiceImpl implements IBrandService {
         return brandMapper.list();
     }
 
+//    @Override
+//    public void deleteById(BrandDeleteDTO brandDeleteDTO) {
+//        //检查品牌id是否存在
+//        Long id = brandDeleteDTO.getId();//获取品牌id的名称
+//        int count = brandMapper.countById(id);//查询是否存在该id
+//        if (count==0){
+//            String message = "删除失败,品牌id["+id+"]不存在";
+//            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);//错误：冲突 - 重复数据
+//        }
+//
+//        Brand brand = new Brand();
+//        BeanUtils.copyProperties(brandDeleteDTO, brand);//类型转换赋值
+//        int rows = brandMapper.deleteById(brand.getId());//执行删除
+//        if (rows != 1){
+//            String message = "删除品牌失败,服务器忙,请稍后重试!";
+//            log.error(message);
+//            throw new ServiceException(ServiceCode.ERR_INSERT, message);//错误：删除失败
+//        }
+//        log.info("删除成功，受影响的行数：{}", rows);
+//    }
+
 
     @Override
-    public void deleteById(BrandDeleteDTO brandDeleteDTO) {
-        //检查品牌id是否存在
-        Long id = brandDeleteDTO.getId();//获取品牌id的名称
-        int count = brandMapper.countById(id);//查询是否存在该id
-        if (count==0){
-            String message = "删除失败,品牌id["+id+"]不存在";
-            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);//错误：冲突 - 重复数据
+    public void deleteById(Long id) {
+        log.debug("处理删除品牌数据的业务，id={}",id);
+        BrandDetailVO brandDetailVO = brandMapper.getById(id);
+        if (brandDetailVO == null){
+            String message = "删除品牌失败,删除的数据(id:"+id+")不存在";
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND,message);
         }
-
-        Brand brand = new Brand();
-        BeanUtils.copyProperties(brandDeleteDTO, brand);//类型转换赋值
-        int rows = brandMapper.deleteById(brand.getId());//执行删除
+        //调用mapper删除方法并返回值
+        int rows = brandMapper.deleteById(id);
         if (rows != 1){
-            String message = "删除品牌失败,服务器忙,请稍后重试!";
-            log.error(message);
-            throw new ServiceException(ServiceCode.ERR_INSERT, message);//错误：删除失败
+            String message = "删除失败,服务器忙,请稍后重试";
+            throw new ServiceException(ServiceCode.ERR_DELETE,message);
         }
-        log.info("删除成功，受影响的行数：{}", rows);
     }
-
     @Override
     public void updateById(BrandUpdateDTO brandUpdateDTO) {
         Long id = brandUpdateDTO.getId();

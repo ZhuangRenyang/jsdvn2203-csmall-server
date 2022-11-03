@@ -24,14 +24,14 @@ public class BrandUpdateDTO implements Serializable {
     @ApiModelProperty(value = "品牌名称",required = true,example ="华为")
 //    @NotNull(message = "请填写有效的品牌名称-Null")
 //    @NotEmpty(message = "请填写有效的品牌名称-Empty")
-    @NotBlank(message = "请填写有效的品牌名称-NotBlank")
+//    @NotBlank(message = "请填写有效的品牌名称-NotBlank")
     private String name;
     /**
      * 品牌名称的拼音
      */
     @ApiModelProperty(value = "品牌拼音",required = true,example = "huawei")
-    @NotNull(message = "请填写有效的品牌拼音")
-    @Pattern(regexp = REGEXP_PINYIN, message = MESSAGE_PINYIN)
+//    @NotNull(message = "请填写有效的品牌拼音")
+//    @Pattern(regexp = REGEXP_PINYIN, message = MESSAGE_PINYIN)
     private String pinyin;
     /**
      * 品牌logo的URL

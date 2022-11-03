@@ -64,12 +64,37 @@
         ORDER BY id
     </select>
 
+    <select id="getById" resultMap="detailResultMap">
+        SELECT id,
+               name,
+               parent_id,
+               keywords,
+               depth,
+               sort,
+               icon,
+               enable,
+               is_parent,
+               is_display,
+               gmt_create,
+               gmt_modified
+        FROM pms_category
+        WHERE id = #{id}
+    </select>
+
+    <resultMap id="detailResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryDetailVO">
+        <result column="parent_id" property="parentId"></result>
+        <result column="is_parent" property="isParent"></result>
+        <result column="is_display" property="isDisplay"></result>
+        <result column="gmt_create" property="gmtCreate"></result>
+        <result column="gmt_modified" property="gmtModified"></result>
+    </resultMap>
+
     <resultMap id="ListItemResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO">
-        <result column="parent_id" property="parentId" ></result>
-        <result column="is_parent" property="isParent" ></result>
-        <result column="is_display" property="isDisplay" ></result>
-        <result column="gmt_create" property="gmtCreate" ></result>
-        <result column="gmt_modified" property="gmtModified" ></result>
+        <result column="parent_id" property="parentId"></result>
+        <result column="is_parent" property="isParent"></result>
+        <result column="is_display" property="isDisplay"></result>
+        <result column="gmt_create" property="gmtCreate"></result>
+        <result column="gmt_modified" property="gmtModified"></result>
     </resultMap>
 
     <sql id="ListItemQueryFields">

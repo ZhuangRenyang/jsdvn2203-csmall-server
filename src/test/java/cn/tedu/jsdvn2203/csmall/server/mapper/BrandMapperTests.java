@@ -1,5 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.mapper;
 
+import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Brand;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandDetailVO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
@@ -42,9 +43,15 @@ public class BrandMapperTests {
 
     @Test
     public void testDeleteById() {
-        Long id = 1L;
-        int rows = brandMapper.deleteById(id);
-        log.info("删除完成，受影响的行数={}", rows);
+        Long id = 10L;
+        try{
+            brandMapper.deleteById(id);
+            log.info("删除完成");
+        }catch (ServiceException e){
+            log.debug("删除失败,业务状态码:{}",e.getServiceCode());
+            log.debug("删除失败的原因:{}",e.getMessage());
+        }
+
     }
 
     @Test

@@ -1,7 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandUpdateDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
@@ -42,17 +41,20 @@ public class BrandController {
     //访问路径http://localhost:8080/brands/delete?id=123&...
     @ApiOperation("根据id删除品牌")
     @ApiOperationSupport(order = 20)
-    @PostMapping("/delete")
-    public JsonResult delete(@RequestBody @Valid BrandDeleteDTO brandDeleteDTO) {
-        log.debug("接收到删除品牌的请求,参数:{}", brandDeleteDTO.getId());
-        brandService.deleteById(brandDeleteDTO);
+    @PostMapping("/{id:[0-9]+}/delete")
+//    public JsonResult delete(@RequestBody  BrandDeleteDTO  brandDeleteDTO)
+    //        brandService.deleteById(brandDeleteDTO);
+    public JsonResult delete(@PathVariable Long id) {
+        log.debug("接收到删除品牌的请求,参数:{}", id);
+        brandService.deleteById(id);
         return JsonResult.ok();
     }
 
     @ApiOperation("修改品牌")
     @ApiOperationSupport(order = 30)
     @PostMapping("/update")
-    public JsonResult update(@RequestBody @Valid BrandUpdateDTO brandUpdateDTO) {
+    public JsonResult update(@RequestBody BrandUpdateDTO brandUpdateDTO) {
+        System.out.println("1111");
         log.info("接收到修改品牌的请求,参数:{}", brandUpdateDTO);
         brandService.updateById(brandUpdateDTO);
         return JsonResult.ok();

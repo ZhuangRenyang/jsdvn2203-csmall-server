@@ -1,7 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.service;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandUpdateDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 
@@ -20,7 +19,13 @@ public interface IBrandService {
     */
    List<BrandListItemVO> list();
 
-   void deleteById(BrandDeleteDTO brandDeleteDTO);
+//   void deleteById(BrandDeleteDTO brandDeleteDTO);
+
+   /**
+    * 根据id删除品牌数据
+    * @param id 品牌id
+    */
+   void deleteById(Long id);
 
    void updateById(BrandUpdateDTO brandUpdateDTO);
 }

@@ -11,6 +11,8 @@ public class ServiceCode {
 
     public static final int ERR_BAD_REQUEST = 40000;
 
+
+    public static final int ERR_NOT_FOUND = 40400;
     /**
      * 错误：冲突 - 重复数据
      */
