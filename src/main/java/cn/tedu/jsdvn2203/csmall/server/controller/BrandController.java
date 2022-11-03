@@ -2,6 +2,7 @@ package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
+import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandUpdateDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
 import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
@@ -44,17 +45,17 @@ public class BrandController {
     @PostMapping("/delete")
     public JsonResult delete(@RequestBody @Valid BrandDeleteDTO brandDeleteDTO) {
         log.debug("接收到删除品牌的请求,参数:{}", brandDeleteDTO.getId());
-        brandService.delete(brandDeleteDTO);
+        brandService.deleteById(brandDeleteDTO);
         return JsonResult.ok();
     }
 
     @ApiOperation("修改品牌")
     @ApiOperationSupport(order = 30)
     @PostMapping("/update")
-    public String update(Long id) {
-        log.info("update-id:{}", id);
-        log.info("BrandController.update");
-        return "update:" + id;
+    public JsonResult update(@RequestBody @Valid BrandUpdateDTO brandUpdateDTO) {
+        log.info("接收到修改品牌的请求,参数:{}", brandUpdateDTO);
+        brandService.updateById(brandUpdateDTO);
+        return JsonResult.ok();
     }
 
     @ApiOperation("查询品牌列表")

@@ -5,6 +5,7 @@ import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandDeleteDTO;
+import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandUpdateDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Brand;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.repo.IBrandRepository;
@@ -68,7 +69,7 @@ public class BrandServiceImpl implements IBrandService {
 
 
     @Override
-    public void delete(BrandDeleteDTO brandDeleteDTO) {
+    public void deleteById(BrandDeleteDTO brandDeleteDTO) {
         //检查品牌id是否存在
         Long id = brandDeleteDTO.getId();//获取品牌id的名称
         int count = brandMapper.countById(id);//查询是否存在该id
@@ -86,5 +87,25 @@ public class BrandServiceImpl implements IBrandService {
             throw new ServiceException(ServiceCode.ERR_INSERT, message);//错误：删除失败
         }
         log.info("删除成功，受影响的行数：{}", rows);
+    }
+
+    @Override
+    public void updateById(BrandUpdateDTO brandUpdateDTO) {
+        Long id = brandUpdateDTO.getId();
+        int count = brandMapper.countById(id);//查询是否存在该id
+        if (count==0){
+            String message = "修改失败,品牌id["+id+"]不存在";
+            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);//错误：冲突 - 重复数据
+        }
+        Brand brand = new Brand();
+        BeanUtils.copyProperties(brandUpdateDTO,brand);
+        brand.setGmtModified(BeanConfig.localDateTime());
+        int rows = brandMapper.updateById(brand);
+        if (rows != 1){
+            String message = "修改品牌失败,服务器忙,请稍后重试!";
+            log.error(message);
+            throw new ServiceException(ServiceCode.ERR_INSERT, message);//错误：删除失败
+        }
+        log.info("修改成功，受影响的行数：{}", rows);
     }
 }

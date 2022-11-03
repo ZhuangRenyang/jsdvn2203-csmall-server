@@ -75,9 +75,9 @@
             <if test="enable != null">
                 enable =#{enable},
             </if>
-            <if test="gmtCreate != null">
-                gmt_create =#{gmtCreate},
-            </if>
+<!--            <if test="gmtCreate != null">-->
+<!--                gmt_create =#{gmtCreate},-->
+<!--            </if>-->
             <if test="gmtModified != null">
                 gmt_modified =#{gmtModified}
             </if>
