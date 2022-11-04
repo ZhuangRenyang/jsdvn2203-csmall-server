@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
         Category category = new Category();//创建实体类
         BeanUtils.copyProperties(categoryAddNewDTO, category);//类型转换赋值
-        category.setGmtCreate(BeanConfig.localDateTime());
+        category.setGmtCreate(BeanConfig.localDateTime());//创建时间
         int rows = categoryMapper.insert(category);//执行插入
         if (rows != 1) {
             String message = "添加品牌失败,服务器忙,请稍后重试!";
@@ -57,23 +57,7 @@ public class CategoryServiceImpl implements ICategoryService {
         return categoryMapper.list();
     }
 
-    @Override
-    public void deleteById(Long id) {
-       CategoryDetailVO categoryDetailVO =  categoryMapper.getById(id);
-       if (categoryDetailVO == null){
-           String message = "删除类别失败，删除的数据(id:"+id+")不存在";
-           throw new ServiceException(ServiceCode.ERR_NOT_FOUND,message);
-       }
-        //调用mapper删除方法并返回值
-       int rows = categoryMapper.deleteById(id);
-       if (rows != 1){
-           String message = "删除品牌失败，服务器忙，请稍后重试~";
-           throw new ServiceException(ServiceCode.ERR_DELETE,message);
-       }
-    }
-
-
-//    @Override
+    //    @Override
 //    public void delete(CategoryDeleteDTO categoryDeleteDTO) {
 //        //检查类别id是否存在
 //        Long id = categoryDeleteDTO.getId();//获取类别id
@@ -93,6 +77,21 @@ public class CategoryServiceImpl implements ICategoryService {
 //        }
 //        log.info("删除成功,受影响的行数:{}", rows);
 //    }
+    @Override
+    public void deleteById(Long id) {
+       CategoryDetailVO categoryDetailVO =  categoryMapper.getById(id);
+       if (categoryDetailVO == null){
+           String message = "删除类别失败，删除的数据(id:"+id+")不存在";
+           throw new ServiceException(ServiceCode.ERR_NOT_FOUND,message);
+       }
+        //调用mapper删除方法并返回值
+       int rows = categoryMapper.deleteById(id);
+       if (rows != 1){
+           String message = "删除品牌失败，服务器忙，请稍后重试~";
+           throw new ServiceException(ServiceCode.ERR_DELETE,message);
+       }
+    }
+
 
 
 }
