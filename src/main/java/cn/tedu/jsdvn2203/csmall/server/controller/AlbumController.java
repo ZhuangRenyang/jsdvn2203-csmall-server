@@ -1,8 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
-import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.AlbumAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.AlbumDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.service.IAlbumService;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
@@ -40,9 +38,8 @@ public class AlbumController {
     @ApiOperation("删除相册")
     @ApiOperationSupport(order = 20)
     @PostMapping("/delete")
-    public String delete(AlbumDeleteDTO albumDeleteDTO){
-        log.debug("接收到删除相册的请求,参数:{}",albumDeleteDTO);
-            albumService.delete(albumDeleteDTO);
+    public String delete(){
+        log.debug("接收到删除相册的请求,参数:{}");
         return "delete";
     }
 }

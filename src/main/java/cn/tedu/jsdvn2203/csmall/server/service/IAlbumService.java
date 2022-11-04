@@ -1,7 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.service;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.AlbumAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.AlbumDeleteDTO;
 
 public interface IAlbumService {
 
@@ -11,5 +10,4 @@ public interface IAlbumService {
      */
     void addNew(AlbumAddNewDTO albumAddNewDTO);
 
-    void delete(AlbumDeleteDTO albumDeleteDTO);
 }

@@ -4,7 +4,6 @@ import cn.tedu.jsdvn2203.csmall.server.config.BeanConfig;
 import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.mapper.CategoryMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Category;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryDetailVO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
@@ -79,19 +78,34 @@ public class CategoryServiceImpl implements ICategoryService {
 //    }
     @Override
     public void deleteById(Long id) {
-       CategoryDetailVO categoryDetailVO =  categoryMapper.getById(id);
-       if (categoryDetailVO == null){
-           String message = "删除类别失败，删除的数据(id:"+id+")不存在";
-           throw new ServiceException(ServiceCode.ERR_NOT_FOUND,message);
-       }
+        CategoryDetailVO categoryDetailVO = categoryMapper.getById(id);
+        if (categoryDetailVO == null) {
+            String message = "删除类别失败，删除的数据(id:" + id + ")不存在";
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+        }
         //调用mapper删除方法并返回值
-       int rows = categoryMapper.deleteById(id);
-       if (rows != 1){
-           String message = "删除品牌失败，服务器忙，请稍后重试~";
-           throw new ServiceException(ServiceCode.ERR_DELETE,message);
-       }
+        int rows = categoryMapper.deleteById(id);
+        if (rows != 1) {
+            String message = "删除品牌失败，服务器忙，请稍后重试~";
+            throw new ServiceException(ServiceCode.ERR_DELETE, message);
+        }
     }
 
-
-
+    @Override
+    public void updateById(Long id, CategoryAddNewDTO categoryAddNewDTO) {
+        CategoryDetailVO categoryDetailVO = categoryMapper.getById(id);
+        if (categoryDetailVO == null) {
+            String message = "修改类别名称失败，修改的数据(id:" + id + ")不存在";
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+        }
+        Category category = new Category();
+        BeanUtils.copyProperties(categoryAddNewDTO, category);
+        category.setGmtModified(BeanConfig.localDateTime());//创建时间
+        int rows = categoryMapper.updateCategory(category);
+        if (rows != 1) {
+            String message = "修改类别名称失败，服务器忙，请稍后重试~";
+            throw new ServiceException(ServiceCode.ERR_DELETE, message);
+        }
+        log.info("修改类别名称失败，服务器忙，请稍后重试~");
+    }
 }

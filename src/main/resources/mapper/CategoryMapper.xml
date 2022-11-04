@@ -113,4 +113,42 @@
             gmt_modified
         </if>
     </sql>
+
+    <!-- int updateCategory(Category category);-->
+    <update id="updateCategory">
+        UPDATE pms_category
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="parentId != null">
+                parent_id=#{parentId},
+            </if>
+            <if test="depth !=null">
+                depth =#{depth},
+            </if>
+            <if test="keywords !=null">
+                keywords=#{keywords},
+            </if>
+            <if test="sort != null">
+                sort=#{sort},
+            </if>
+            <if test="icon != null">
+                icon=#{icon},
+            </if>
+            <if test="enable != null">
+                enable=#{enable},
+            </if>
+            <if test="isParent !=null">
+                is_parent=#{isParent},
+            </if>
+            <if test="isDisplay !=null">
+                is_display=#{isDisplay},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified =#{gmtModified}
+            </if>
+        </set>
+        WHERE id =#{id}
+    </update>
 </mapper>

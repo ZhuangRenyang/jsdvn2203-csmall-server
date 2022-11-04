@@ -1,7 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
 import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
@@ -75,10 +74,10 @@ public class CategoryController {
     @ApiOperation("修改类别")
     @ApiOperationSupport(order = 30)
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") CategoryAddNewDTO categoryAddNewDTO) {
-        log.info("categoryAddNewDTO:{}", categoryAddNewDTO);
-        log.info("CategoryController.update");
-        return "update";
+    public JsonResult update(@PathVariable("id")Long id,CategoryAddNewDTO categoryAddNewDTO) {
+        log.info("接收到修改类别的请求,参数id:{}", id);
+        categoryService.updateById(id, categoryAddNewDTO);
+        return JsonResult.ok();
     }
 
     //访问路径 http://localhost:8080/category

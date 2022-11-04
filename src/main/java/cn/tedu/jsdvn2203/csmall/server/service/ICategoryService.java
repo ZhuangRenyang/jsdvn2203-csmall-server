@@ -1,7 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.service;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryDeleteDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
 
 import java.util.List;
@@ -19,5 +18,7 @@ public interface ICategoryService {
 //    void delete(CategoryDeleteDTO categoryDeleteDTO);
 
     void deleteById(Long id);
+
+    void updateById(Long id,CategoryAddNewDTO categoryAddNewDTO);
 
 }

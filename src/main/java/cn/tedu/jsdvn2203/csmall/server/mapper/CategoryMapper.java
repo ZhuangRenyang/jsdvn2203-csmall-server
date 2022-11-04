@@ -27,4 +27,6 @@ public interface CategoryMapper {
     CategoryDetailVO getById(Long id);
 
     List<CategoryListItemVO> list();
+
+    int updateCategory(Category category);
 }

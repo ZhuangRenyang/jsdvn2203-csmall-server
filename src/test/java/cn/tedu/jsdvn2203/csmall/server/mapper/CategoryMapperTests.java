@@ -1,11 +1,18 @@
 package cn.tedu.jsdvn2203.csmall.server.mapper;
 
 
+import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
+import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Category;
+import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryDetailVO;
+import cn.tedu.jsdvn2203.csmall.server.web.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.concurrent.Callable;
 
 @Slf4j
 @SpringBootTest
@@ -36,5 +43,16 @@ public class CategoryMapperTests {
     public void testDeleteByIds(){
         int rows = categoryMapper.deleteByIds(10L,11L,12L);
         log.info("批量删除成功,受影响的行数:{}",rows);
+    }
+
+    @Test
+    public void updateById() {
+        Category category = new Category();
+        Long id = 17L;
+        String name = "哈哈哈";
+        category.setId(id);
+        category.setName(name);
+        int rows = categoryMapper.updateCategory(category);
+        log.info("修改成功,受影响的行数:{}",rows);
     }
 }
