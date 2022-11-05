@@ -63,8 +63,6 @@ public class CategoryController {
     @ApiOperation("根据id删除类别")
     @ApiOperationSupport(order = 20)
     @PostMapping("/{id:[0-9]+}/delete")
-//     public JsonResult delete(@RequestBody @Valid CategoryDeleteDTO categoryDeleteDTO){
-//             categoryService.delete(categoryDeleteDTO);
     public JsonResult delete(@PathVariable Long id) {
         log.info("接收到删除类别的请求,参数id:{}", id);
         categoryService.deleteById(id);
@@ -73,7 +71,7 @@ public class CategoryController {
 
     @ApiOperation("修改类别")
     @ApiOperationSupport(order = 30)
-    @PostMapping("/{id}/update/{name}")
+    @PostMapping("/{id:[0-9]+}/update/{name}")
     public JsonResult update(@PathVariable("id")Long id,@PathVariable("name") String name) {
         log.info("接收到修改类别的请求,参数id:{},参数名称:{}", id,name);
         categoryService.updateById(id,name);

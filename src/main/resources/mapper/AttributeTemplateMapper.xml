@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.AttributeTemplateMapper">
+
+<!--    int insert(AttributeTemplate attributeTemplate);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pms_attribute_template
         (pinyin,

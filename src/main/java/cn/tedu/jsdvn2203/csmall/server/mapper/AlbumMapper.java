@@ -14,6 +14,12 @@ public interface AlbumMapper {
      */
     int insert(Album album);
 
+    /**
+     * 根据相册id删除相册数据
+     *
+     * @param id 期望删除的相册数据的id
+     * @return 受影响的行数，当删除成功时，返回1，如果无此id对应的数据，则返回0
+     */
     int deleteById(Long id);
 
     int deleteByIds(Long... ids);

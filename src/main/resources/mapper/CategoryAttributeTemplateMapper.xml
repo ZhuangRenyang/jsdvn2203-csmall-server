@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.CategoryAttributeTemplateMapper">
+
+<!--    int insert(CategoryAttributeTemplate categoryAttributeTemplate);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pms_category_attribute_template(category_id,
                                                     attribute_template_id,
@@ -14,12 +16,14 @@
                 #{gmtModified})
     </insert>
 
+<!--    int deleteById(Long id);-->
     <delete id="deleteById">
         DELETE
         FROM pms_category_attribute_template
         WHERE id = #{id}
     </delete>
 
+<!--    int deleteByIds(Long... id);-->
     <delete id="deleteByIds">
         DELETE FROM pms_category_attribute_template
         WHERE IN (

@@ -75,9 +75,6 @@
             <if test="enable != null">
                 enable =#{enable},
             </if>
-<!--            <if test="gmtCreate != null">-->
-<!--                gmt_create =#{gmtCreate},-->
-<!--            </if>-->
             <if test="gmtModified != null">
                 gmt_modified =#{gmtModified}
             </if>
@@ -97,7 +94,7 @@
         FROM pms_brand
         WHERE name = #{name}
     </select>
-
+<!--    int updateById(Brand brand);-->
     <select id="countById" resultType="int">
         SELECT COUNT(*)
         FROM pms_brand
@@ -121,7 +118,6 @@
         FROM pms_brand
         WHERE id = #{id}
     </select>
-
     <resultMap id="detailResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandDetailVO">
         <result column="product_count" property="productCount"></result>
         <result column="comment_count" property="commentCount"></result>
@@ -135,7 +131,6 @@
         FROM pms_brand
         ORDER BY id
     </select>
-
     <resultMap id="ListItemResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO">
         <result column="product_count" property="productCount"></result>
         <result column="comment_count" property="commentCount"></result>
@@ -143,7 +138,6 @@
         <result column="gmt_create" property="gmtCreate"></result>
         <result column="gmt_modified" property="gmtModified"></result>
     </resultMap>
-
     <sql id="ListItemQueryFields">
         <if test="true">
             id,
@@ -162,4 +156,6 @@
             gmt_modified
         </if>
     </sql>
+
+
 </mapper>

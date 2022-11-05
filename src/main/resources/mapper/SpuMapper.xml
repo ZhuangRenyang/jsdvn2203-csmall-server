@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.SpuMapper">
+
+<!--    int insert(Spu spu);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pms_spu(id,
                             name,
@@ -68,12 +70,14 @@
                 #{gmtModified})
     </insert>
 
+<!--    int deleteById(Long id);-->
     <delete id="deleteById">
         DELETE
         FROM pms_spu
         WHERE id = #{id}
     </delete>
 
+<!--    int deleteByIds(Long... id);-->
     <delete id="deleteByIds">
         DELETE FROM pms_spu
         WHERE IN (

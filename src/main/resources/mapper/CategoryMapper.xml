@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tedu.jsdvn2203.csmall.server.mapper.CategoryMapper">
+
+<!--    int insert(Category category);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pms_category(name,
                                  parent_id,
@@ -28,12 +30,14 @@
                 #{gmtModified})
     </insert>
 
+<!--    int deleteById(Long id);-->
     <delete id="deleteById">
         DELETE
         FROM pms_category
         WHERE id = #{id}
     </delete>
 
+    <!--    int deleteByIds(Long id);-->
     <delete id="deleteByIds">
         DELETE
         FROM pms_category
@@ -51,44 +55,20 @@
         WHERE name = #{name}
     </select>
 
+<!--    int countById(Long id);-->
     <select id="countById" resultType="int">
         SELECT COUNT(*)
         FROM pms_category
         WHERE id = #{id}
     </select>
 
+<!--    List<CategoryListItemVO> list();-->
     <select id="list" resultMap="ListItemResultMap">
         SELECT
         <include refid="ListItemQueryFields"/>
         FROM pms_category
         ORDER BY id
     </select>
-
-    <select id="getById" resultMap="detailResultMap">
-        SELECT id,
-               name,
-               parent_id,
-               keywords,
-               depth,
-               sort,
-               icon,
-               enable,
-               is_parent,
-               is_display,
-               gmt_create,
-               gmt_modified
-        FROM pms_category
-        WHERE id = #{id}
-    </select>
-
-    <resultMap id="detailResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryDetailVO">
-        <result column="parent_id" property="parentId"></result>
-        <result column="is_parent" property="isParent"></result>
-        <result column="is_display" property="isDisplay"></result>
-        <result column="gmt_create" property="gmtCreate"></result>
-        <result column="gmt_modified" property="gmtModified"></result>
-    </resultMap>
-
     <resultMap id="ListItemResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO">
         <result column="parent_id" property="parentId"></result>
         <result column="is_parent" property="isParent"></result>
@@ -96,7 +76,6 @@
         <result column="gmt_create" property="gmtCreate"></result>
         <result column="gmt_modified" property="gmtModified"></result>
     </resultMap>
-
     <sql id="ListItemQueryFields">
         <if test="true">
             id,
@@ -113,6 +92,33 @@
             gmt_modified
         </if>
     </sql>
+
+<!--    CategoryDetailVO getById(Long id);-->
+    <select id="getById" resultMap="detailResultMap">
+        SELECT id,
+               name,
+               parent_id,
+               keywords,
+               depth,
+               sort,
+               icon,
+               enable,
+               is_parent,
+               is_display,
+               gmt_create,
+               gmt_modified
+        FROM pms_category
+        WHERE id = #{id}
+    </select>
+    <resultMap id="detailResultMap" type="cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryDetailVO">
+        <result column="parent_id" property="parentId"></result>
+        <result column="is_parent" property="isParent"></result>
+        <result column="is_display" property="isDisplay"></result>
+        <result column="gmt_create" property="gmtCreate"></result>
+        <result column="gmt_modified" property="gmtModified"></result>
+    </resultMap>
+
+
 
     <!-- int updateCategory(Category category);-->
     <update id="updateCategory">
@@ -151,4 +157,6 @@
         </set>
         WHERE id =#{id}
     </update>
+
+
 </mapper>
