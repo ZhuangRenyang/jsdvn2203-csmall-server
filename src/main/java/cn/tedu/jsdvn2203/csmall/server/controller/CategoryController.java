@@ -73,10 +73,10 @@ public class CategoryController {
 
     @ApiOperation("修改类别")
     @ApiOperationSupport(order = 30)
-    @PostMapping("/{id}/update")
-    public JsonResult update(@PathVariable("id")Long id,CategoryAddNewDTO categoryAddNewDTO) {
-        log.info("接收到修改类别的请求,参数id:{}", id);
-        categoryService.updateById(id, categoryAddNewDTO);
+    @PostMapping("/{id}/update/{name}")
+    public JsonResult update(@PathVariable("id")Long id,@PathVariable("name") String name) {
+        log.info("接收到修改类别的请求,参数id:{},参数名称:{}", id,name);
+        categoryService.updateById(id,name);
         return JsonResult.ok();
     }
 

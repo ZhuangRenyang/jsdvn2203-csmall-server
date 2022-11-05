@@ -4,7 +4,6 @@ import cn.tedu.jsdvn2203.csmall.server.config.BeanConfig;
 import cn.tedu.jsdvn2203.csmall.server.exception.ServiceException;
 import cn.tedu.jsdvn2203.csmall.server.mapper.BrandMapper;
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandUpdateDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Brand;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandDetailVO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
@@ -104,22 +103,22 @@ public class BrandServiceImpl implements IBrandService {
         }
     }
     @Override
-    public void updateById(BrandUpdateDTO brandUpdateDTO) {
-        Long id = brandUpdateDTO.getId();
-        int count = brandMapper.countById(id);//查询是否存在该id
-        if (count==0){
-            String message = "修改失败,品牌id["+id+"]不存在";
-            throw new ServiceException(ServiceCode.ERR_CONFLICT,message);//错误：冲突 - 重复数据
+    public void updateById(Long id,String name) {
+        BrandDetailVO brandDetailVO = brandMapper.getById(id);
+        if (brandDetailVO==null){
+            String message = "修改品牌名称失败，修改的数据(id:" + id + ")不存在";
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
         }
         Brand brand = new Brand();
-        BeanUtils.copyProperties(brandUpdateDTO,brand);
+        brand.setId(id);
+        brand.setName(name);
         brand.setGmtModified(BeanConfig.localDateTime());
         int rows = brandMapper.updateById(brand);
-        if (rows != 1){
-            String message = "修改品牌失败,服务器忙,请稍后重试!";
-            log.error(message);
-            throw new ServiceException(ServiceCode.ERR_INSERT, message);//错误：删除失败
+        if (rows != 1) {
+            String message = "修改品牌名称失败，服务器忙，请稍后重试~";
+            throw new ServiceException(ServiceCode.ERR_DELETE, message);
         }
-        log.info("修改成功，受影响的行数：{}", rows);
+        log.info("修改的品牌id为:{},名称为:{}",id,name);
+        log.info("修改品牌名称成功~");
     }
 }

@@ -92,20 +92,22 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public void updateById(Long id, CategoryAddNewDTO categoryAddNewDTO) {
+    public void updateById(Long id, String name) {
         CategoryDetailVO categoryDetailVO = categoryMapper.getById(id);
         if (categoryDetailVO == null) {
             String message = "修改类别名称失败，修改的数据(id:" + id + ")不存在";
             throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
         }
         Category category = new Category();
-        BeanUtils.copyProperties(categoryAddNewDTO, category);
+        category.setId(id);
+        category.setName(name);
         category.setGmtModified(BeanConfig.localDateTime());//创建时间
         int rows = categoryMapper.updateCategory(category);
         if (rows != 1) {
             String message = "修改类别名称失败，服务器忙，请稍后重试~";
             throw new ServiceException(ServiceCode.ERR_DELETE, message);
         }
-        log.info("修改类别名称失败，服务器忙，请稍后重试~");
+        log.info("修改的类别id为:{},名称为:{}",id,name);
+        log.info("修改类别名称成功~");
     }
 }

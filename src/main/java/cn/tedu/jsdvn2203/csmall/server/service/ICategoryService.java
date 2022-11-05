@@ -19,6 +19,6 @@ public interface ICategoryService {
 
     void deleteById(Long id);
 
-    void updateById(Long id,CategoryAddNewDTO categoryAddNewDTO);
+    void updateById(Long id, String name);
 
 }

@@ -1,7 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandUpdateDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
 import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
@@ -52,11 +51,10 @@ public class BrandController {
 
     @ApiOperation("修改品牌")
     @ApiOperationSupport(order = 30)
-    @PostMapping("/update")
-    public JsonResult update(@RequestBody BrandUpdateDTO brandUpdateDTO) {
-        System.out.println("1111");
-        log.info("接收到修改品牌的请求,参数:{}", brandUpdateDTO);
-        brandService.updateById(brandUpdateDTO);
+    @PostMapping("/{id}/update/{name}")
+    public JsonResult update(@PathVariable("id")Long id, @PathVariable("name") String name) {
+        log.info("接收到修改品牌的请求,参数:{},名称：{}", id,name);
+        brandService.updateById(id, name);
         return JsonResult.ok();
     }
 

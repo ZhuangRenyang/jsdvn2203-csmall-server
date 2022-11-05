@@ -1,7 +1,6 @@
 package cn.tedu.jsdvn2203.csmall.server.service;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
-import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandUpdateDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
 
 import java.util.List;
@@ -27,5 +26,5 @@ public interface IBrandService {
     */
    void deleteById(Long id);
 
-   void updateById(BrandUpdateDTO brandUpdateDTO);
+   void updateById(Long id,String name);
 }
