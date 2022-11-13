@@ -12,7 +12,21 @@ public class ServiceCode {
     public static final int ERR_BAD_REQUEST = 40000;
 
 
+    /*
+     *错误: JWT 数据错误可能被恶意篡改
+     */
+    public static final int ERR_JWT_INVALID = 40001;
+
+    /*
+     *错误: JWT过期
+     */
+    public static final int ERR_JWT_EXPIRED = 40300;
+
+    /*
+     *错误: 数据不存在
+     */
     public static final int ERR_NOT_FOUND = 40400;
+
     /**
      * 错误：冲突 - 重复数据
      */

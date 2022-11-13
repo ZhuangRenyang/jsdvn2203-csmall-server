@@ -2,6 +2,7 @@ package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
+import cn.tedu.jsdvn2203.csmall.server.security.LoginPrincipal;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
 import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -9,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -84,8 +86,12 @@ public class CategoryController {
     @ApiOperation("查询类别列表")
     @ApiOperationSupport(order = 40)
     @GetMapping("")
-    public JsonResult list() {
-        log.info("CategoryController.list");
+    public JsonResult list(@AuthenticationPrincipal LoginPrincipal principal) {
+        log.debug("接收到查询类别列表的请求");
+
+        Long id = principal.getId();
+        String username = principal.getUsername();
+        log.debug("认证信息中:id:{},用户名:{}",id,username);
         List<CategoryListItemVO> list = categoryService.list();
         return JsonResult.ok(list);
     }

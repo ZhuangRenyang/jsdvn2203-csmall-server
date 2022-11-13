@@ -2,6 +2,7 @@ package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.BrandAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.BrandListItemVO;
+import cn.tedu.jsdvn2203.csmall.server.security.LoginPrincipal;
 import cn.tedu.jsdvn2203.csmall.server.service.IBrandService;
 import cn.tedu.jsdvn2203.csmall.server.web.JsonResult;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -9,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,8 +63,12 @@ public class BrandController {
     @ApiOperation("查询品牌列表")
     @ApiOperationSupport(order = 40)
     @GetMapping("")
-    public JsonResult list() {
-        log.info("BrandController.list");
+    public JsonResult list(@AuthenticationPrincipal LoginPrincipal principal) {
+        log.debug("接收到查询品牌列表的请求");
+
+        Long id = principal.getId();
+        String username = principal.getUsername();
+        log.debug("认证信息中:id:{},用户名:{}",id,username);
         List<BrandListItemVO> list = brandService.list();
         return JsonResult.ok(list);
     }
