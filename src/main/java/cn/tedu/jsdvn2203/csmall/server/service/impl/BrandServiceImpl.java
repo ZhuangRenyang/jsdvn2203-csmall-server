@@ -96,6 +96,7 @@ public class BrandServiceImpl implements IBrandService {
             throw new ServiceException(ServiceCode.ERR_NOT_FOUND,message);
         }
         //调用mapper删除方法并返回值
+
         int rows = brandMapper.deleteById(id);
         if (rows != 1){
             String message = "删除失败,服务器忙,请稍后重试";

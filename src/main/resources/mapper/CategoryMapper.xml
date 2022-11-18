@@ -62,6 +62,18 @@
         WHERE id = #{id}
     </select>
 
+    <!-- List<CategoryListItemVO> listByParentId(Long parentId); -->
+    <select id="listByParentId" resultMap="ListItemResultMap">
+        SELECT
+        <include refid="ListItemQueryFields" />
+        FROM
+        pms_category
+        WHERE
+        parent_id=#{parentId}
+        ORDER BY
+        sort DESC, id
+    </select>
+
 <!--    List<CategoryListItemVO> list();-->
     <select id="list" resultMap="ListItemResultMap">
         SELECT
@@ -92,21 +104,18 @@
             gmt_modified
         </if>
     </sql>
+<!--    CategoryDetailVO getParentId(Long id);-->
+    <select id="getParentId" resultMap="detailResultMap">
+        SELECT
+        <include refid="DetailQueryFields" />
+        FROM pms_category
+        WHERE parent_id = #{parentId}
+    </select>
 
 <!--    CategoryDetailVO getById(Long id);-->
     <select id="getById" resultMap="detailResultMap">
-        SELECT id,
-               name,
-               parent_id,
-               keywords,
-               depth,
-               sort,
-               icon,
-               enable,
-               is_parent,
-               is_display,
-               gmt_create,
-               gmt_modified
+        SELECT
+        <include refid="DetailQueryFields" />
         FROM pms_category
         WHERE id = #{id}
     </select>
@@ -117,11 +126,25 @@
         <result column="gmt_create" property="gmtCreate"></result>
         <result column="gmt_modified" property="gmtModified"></result>
     </resultMap>
+    <sql id="DetailQueryFields">
+        <if test="true">
+            id,
+            name,
+            parent_id,
+            keywords,
+            depth,
+            sort,
+            icon,
+            enable,
+            is_parent,
+            is_display,
+            gmt_create,
+            gmt_modified
+        </if>
+    </sql>
 
-
-
-    <!-- int updateCategory(Category category);-->
-    <update id="updateCategory">
+    <!-- int updateById(Category category);-->
+    <update id="updateById">
         UPDATE pms_category
         <set>
             <if test="name != null">
