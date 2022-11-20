@@ -47,12 +47,6 @@ public class CategoryMapperTests {
 
     @Test
     public void updateById() {
-        Category category = new Category();
-        Long id = 17L;
-        String name = "哈哈哈";
-        category.setId(id);
-        category.setName(name);
-        int rows = categoryMapper.updateCategory(category);
-        log.info("修改成功,受影响的行数:{}",rows);
+
     }
 }

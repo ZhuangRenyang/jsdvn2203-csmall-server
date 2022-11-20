@@ -20,13 +20,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthorizationFilter jwtAuthorizationFilter;
 
-    @Bean
+
     @Override
     public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
-    @Bean
+
     public BCryptPasswordEncoder passwordEncoder() {
         log.debug("创建密码编码器组件：BCryptPasswordEncoder");
         return new BCryptPasswordEncoder();

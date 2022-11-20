@@ -33,4 +33,6 @@ public interface CategoryMapper {
     List<CategoryListItemVO> listByParentId(Long parentId);
 
     int updateById(Category category);
+
+    int countByParentId(Long parentId);
 }

@@ -62,7 +62,15 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     public List<BrandListItemVO> list() {
         log.debug("处理查询品牌列表的业务...");
-        return brandMapper.list();
+//        List<BrandListItemVO> brands = brandRepository.getList();
+//        if (brands.size() == 0){
+//            List<BrandListItemVO> dbList = brandMapper.list();
+//            if (dbList.size()>0){
+//                brandRepository.putList(dbList);
+//                return dbList;
+//            }
+//        }
+        return brandRepository.getList();
     }
 
 //    @Override

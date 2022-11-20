@@ -122,56 +122,53 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        // 目标: 检查是否有必要将父级类别的isParent改为0
-        // 步骤：
-        //  1.根据此前的检查结果得到parentId
-        //  2.开发Mapper层:根据父级类别id统计子级类别的数量
-        //  3.检查是否有必要将父级类别的isParent改为0
-        //   判断: 统计当前类别的父级类别有多少个子级，判断您是否等于0
-        //      是: 将父级类别的isParent改为0
+        log.debug("开始处理删除类别的业务，id={}", id);
+
+        // 根据id查询数据
+        CategoryDetailVO queryResult = categoryMapper.getById(id);
+
+        // 判断查询结果是否为null
+        if (queryResult == null) {
+            // 抛出异常
+            String message = "删除类别失败，尝试删除的数据（id=" + id + "）不存在！";
+            log.error(message);
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+        }
+
         //  4.检查当前类别是否存在子级类别
-        // 获取参数中的parentId
-
-
-        CategoryDetailVO categoryDetailVO = categoryMapper.getById(id);
-
-        Long parentId = categoryDetailVO.getParentId();
-        CategoryDetailVO parentCategory = null;
-        if (parentId != 0){//0代表没有子级
-//            List<CategoryListItemVO> categoryListItemVOS = categoryMapper.listByParentId(id);
-            //判断子级类别是否存在，如果存在，抛出异常
-//            log.debug("根据id查询的数据{}",categoryListItemVOS);
-            parentCategory = categoryMapper.getParentId(id);
-            log.debug("根据id查询的数据{}",parentCategory);
-
-            if(parentCategory != null){
-
-                String message = "删除类别失败，该父级类别存在子级类别"+parentCategory.getId();
-                log.debug(message);
-                throw new ServiceException(ServiceCode.ERR_NOT_FOUND,message);
+        {
+            int count = categoryMapper.countByParentId(id);
+            if(count > 0){
+                String message = "删除类别失败，当前类别仍存在子级类别，不允许删除！";
+                log.error(message);
+                throw new ServiceException(ServiceCode.ERR_CONFLICT, message);
             }
         }
 
-        if (categoryDetailVO == null) {
-            String message = "删除类别失败，删除的数据(id:" + id + ")不存在";
-            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
-        }
-        //调用mapper删除方法并返回值
         int rows = categoryMapper.deleteById(id);
         if (rows != 1) {
             String message = "删除品牌失败，服务器忙，请稍后重试~";
             throw new ServiceException(ServiceCode.ERR_DELETE, message);
         }
-        // 如果parentId不为0，父级类别的isParent为0
-        if(parentId == 0 && parentCategory.getIsParent() != 0){
-            Category c = new Category();
-            c.setId(parentId);//父类的id
-            c.setIsParent(0);//修改父类为父级，1=是，0=不是
-            rows = categoryMapper.updateById(c);
+        // 目标: 检查是否有必要将父级类别的isParent改为0
+        // 步骤：
+        //  1.根据此前的检查结果得到parentId
+        Long parentId = queryResult.getParentId();
+        //  2.开发Mapper层:根据父级类别id统计子级类别的数量
+        int count = categoryMapper.countByParentId(parentId);
+        //  3.检查是否有必要将父级类别的isParent改为0
+        //   判断: 统计当前类别的父级类别有多少个子级，判断您是否等于0
+        if(count == 0){
+            //   是: 将父级类别的isParent改为0
+            Category category = new Category();
+            category.setId(parentId);
+            category.setIsParent(0);
+            rows = categoryMapper.updateById(category);
             if (rows != 1) {
-                String message = "添加类别失败，请稍后再次尝试！【错误码：2】";
+                // 抛出异常
+                String message = "删除类别失败，服务器忙，请稍后再次尝试！【错误码：2】";
                 log.error(message);
-                throw new ServiceException(ServiceCode.ERR_INSERT, message);
+                throw new ServiceException(ServiceCode.ERR_DELETE, message);
             }
         }
     }
