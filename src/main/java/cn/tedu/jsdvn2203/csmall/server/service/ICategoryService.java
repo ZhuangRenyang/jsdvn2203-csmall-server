@@ -11,6 +11,7 @@ public interface ICategoryService {
 
     /**
      * 分类列表
+     *
      * @return 分类列表
      */
     List<CategoryListItemVO> list();

@@ -17,16 +17,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Slf4j
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
-//    @Resource(name="categoryRepositoryImpl2")
-//    private ICategoryRepository categoryRepository;
+    //@Resource注解通过name指定Bean的名称
+//    @Resource(name = "categoryRepositoryImpl2")
 
+//@Qualifier注解是配合Spring框架自动装配使用的，专门用于指定Bean的名称
+//    @Qualifier("categoryRepositoryImpl2")
     @Autowired
     @Qualifier("categoryRepositoryImpl")
     private ICategoryRepository categoryRepository;
@@ -106,7 +107,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public List<CategoryListItemVO> list() {
         log.debug("处理查询分类列表的业务...");
-        return categoryMapper.list();
+        return categoryRepository.getList();
     }
 
     //    @Override

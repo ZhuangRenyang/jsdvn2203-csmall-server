@@ -1,6 +1,7 @@
 package cn.tedu.jsdvn2203.csmall.server.controller;
 
 import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
+import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryDetailVO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
 import cn.tedu.jsdvn2203.csmall.server.security.LoginPrincipal;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
