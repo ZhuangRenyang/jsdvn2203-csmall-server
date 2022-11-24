@@ -7,22 +7,32 @@ import cn.tedu.jsdvn2203.csmall.server.pojo.dto.CategoryAddNewDTO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.entity.Category;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryDetailVO;
 import cn.tedu.jsdvn2203.csmall.server.pojo.vo.CategoryListItemVO;
+import cn.tedu.jsdvn2203.csmall.server.repo.ICategoryRepository;
 import cn.tedu.jsdvn2203.csmall.server.service.ICategoryService;
 import cn.tedu.jsdvn2203.csmall.server.web.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Slf4j
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
+//    @Resource(name="categoryRepositoryImpl2")
+//    private ICategoryRepository categoryRepository;
+
     @Autowired
-    CategoryMapper categoryMapper;
+    @Qualifier("categoryRepositoryImpl")
+    private ICategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     public CategoryServiceImpl() {
         log.info("创建业务逻辑对象.CategoryService");
